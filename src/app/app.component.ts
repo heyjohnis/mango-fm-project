@@ -1,3 +1,4 @@
+
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
@@ -20,26 +21,27 @@ import { UserData } from './providers/user-data';
 export class AppComponent implements OnInit {
   appPages = [
     {
-      title: 'Schedule',
-      url: '/app/tabs/schedule',
-      icon: 'calendar'
+      title: '홈',
+      url: '/app/tabs/home',
+      icon: 'home'
     },
     {
-      title: 'Speakers',
-      url: '/app/tabs/speakers',
+      title: '고객',
+      url:'/app/tabs/customer',
       icon: 'contacts'
     },
     {
-      title: 'Map',
-      url: '/app/tabs/map',
-      icon: 'map'
+      title: '자산',
+      url:'/app/tabs/asset',
+      icon: 'logo-usd'
     },
     {
-      title: 'About',
+      title: '문의사항',
       url: '/app/tabs/about',
       icon: 'information-circle'
     }
   ];
+
   loggedIn = false;
   dark = false;
 
@@ -87,6 +89,7 @@ export class AppComponent implements OnInit {
 
   checkLoginStatus() {
     return this.userData.isLoggedIn().then(loggedIn => {
+      console.log("loggedIn check");
       return this.updateLoggedInStatus(loggedIn);
     });
   }
@@ -98,7 +101,9 @@ export class AppComponent implements OnInit {
   }
 
   listenForLoginEvents() {
+    console.log("listenForLoginEvents"); 
     window.addEventListener('user:login', () => {
+      console.log("listenForLoginEvents : login"); 
       this.updateLoggedInStatus(true);
     });
 
@@ -107,13 +112,14 @@ export class AppComponent implements OnInit {
     });
 
     window.addEventListener('user:logout', () => {
+      console.log("listenForLoginEvents : logout"); 
       this.updateLoggedInStatus(false);
     });
   }
 
   logout() {
     this.userData.logout().then(() => {
-      return this.router.navigateByUrl('/app/tabs/schedule');
+      return this.router.navigateByUrl('/login');
     });
   }
 

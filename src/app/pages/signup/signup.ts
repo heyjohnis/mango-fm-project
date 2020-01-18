@@ -7,14 +7,13 @@ import { UserData } from '../../providers/user-data';
 import { UserOptions } from '../../interfaces/user-options';
 
 
-
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html',
   styleUrls: ['./signup.scss'],
 })
 export class SignupPage {
-  signup: UserOptions = { username: '', password: '' };
+  signup: UserOptions = { uid: '', user_id: '', email: '', username: '', password: '' };
   submitted = false;
 
   constructor(
@@ -24,10 +23,14 @@ export class SignupPage {
 
   onSignup(form: NgForm) {
     this.submitted = true;
-
     if (form.valid) {
-      this.userData.signup(this.signup.username);
-      this.router.navigateByUrl('/app/tabs/schedule');
+      this.userData.signup(this.signup).then((res) => {
+        this.userData.removeStorage();
+        this.userData.regUser(res);
+      }).catch(err => {
+        console.log('error: ', err);
+      });
     }
   }
 }
+

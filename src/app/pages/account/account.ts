@@ -13,6 +13,9 @@ import { UserData } from '../../providers/user-data';
 })
 export class AccountPage implements AfterViewInit {
   username: string;
+  email: string;
+  user_id: string;
+
 
   constructor(
     public alertCtrl: AlertController,
@@ -21,7 +24,8 @@ export class AccountPage implements AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
-    this.getUsername();
+    //this.getUsername();
+    this.getUserData();
   }
 
   updatePicture() {
@@ -54,6 +58,16 @@ export class AccountPage implements AfterViewInit {
       ]
     });
     await alert.present();
+  }
+
+  getUserData() {
+    this.userData.getUserData().then( ( data) => {
+      console.log("data : " , data);
+      this.username = data.user_nm;
+      this.user_id = data.user_id;
+      this.email = data.email;
+
+    });
   }
 
   getUsername() {

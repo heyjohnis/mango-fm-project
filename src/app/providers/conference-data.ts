@@ -18,8 +18,8 @@ export class ConferenceData {
       return of(this.data);
     } else {
       return this.http
-        .get('assets/data/data.json')
-        .pipe(map(this.processData, this));
+        .post('http://localhost:8080/upload/test', '');
+        //.pipe(map(this.processData, this));
     }
   }
 

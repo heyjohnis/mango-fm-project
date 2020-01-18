@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-segment [(ngModel)]="segment" (click)="selectSegment()">
+      <ion-segment-button value="cust_nm">
+        이름 
+      </ion-segment-button>
+      <ion-segment-button value="reg_date">
+        등록일
+      </ion-segment-button>
+      <ion-segment-button value="eval_account">
+        자산
+      </ion-segment-button>
+      <ion-segment-button value="profits_rate">
+        수익률
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]="queryText" (ionChange)="inpSearchKey()" placeholder="검색할 이름을 입력하세요"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item><ion-label>전체고객</ion-label>{{cnt_customers}}</ion-item>
+  <ion-list>
+    <!-- <ion-list-header>
+      <ion-label>최신등록고객</ion-label>
+    </ion-list-header> -->
+    <ion-item *ngFor="let customer of customers" (click)="gotoDetail(customer.cust_id, customer.cust_nm)">
+    <ion-label class="list-name">{{customer.cust_nm}} <span>{{customer.account_no}}</span></ion-label>
+    <div class="list-account">{{customer.eval_account | number}}</div>
+    <div class="list-rate">{{customer.profits_rate | percent}}</div>
+    <div class="list-date">{{customer.reg_date.substring(0,10)}}</div>
+	</ion-item>
+  </ion-list>
+</ion-content>

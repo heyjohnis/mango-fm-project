@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{cust_nm}} {{account_no}}</ion-title>
+    <ion-buttons class="btn_close" slot="end" (click) = "dismiss()">
+      <ion-icon name="close"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]="queryText" (ionChange)="inpSearchKey()" placeholder="검색할 이름을 입력하세요"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item><ion-label>전체고객</ion-label>{{cnt_customers}}</ion-item>
+  <ion-list>
+    <!-- <ion-list-header>
+      <ion-label>최신등록고객</ion-label>
+    </ion-list-header> -->
+    <ion-item *ngFor="let customer of customers" (click)="selectFamilyKey(customer.cust_nm, customer.cust_id)">
+		<ion-label class="list-name">{{customer.cust_nm}} <span>{{customer.account_no}}</span></ion-label>
+		<div class="list-account">{{customer.eval_account | number}}</div>
+		<div class="list-rate">{{customer.profits_rate | percent}}</div>
+		<div class="list-date">{{customer.reg_date.substring(0,10)}}</div>
+	</ion-item>
+  </ion-list>
+</ion-content>

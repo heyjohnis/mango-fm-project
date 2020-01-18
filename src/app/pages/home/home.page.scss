@@ -1,0 +1,36 @@
+.area {
+  margin-bottom:10px;
+  padding: 15px;
+  background: rgba(0,0,0,0.05);
+}
+
+#dropZone {
+  border: 2px dashed #bbb;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  font: 15pt bold arial;
+  color: #bbb;
+}
+
+.drop-file-over{
+background: #888;
+}
+
+
+.base_date{text-align: right; 
+  color: var(--ion-color-medium); 
+  size:0.75em;}
+
+.fund_raising{
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--ion-color-primary);
+}
+
+.fund_raising span{padding:0.4em; font-size:0.7em; color:var(--ion-color-primary-tint);}
+
+.cnt_costomers{text-align:right; color:var(--ion-color-medium);}
+.cnt_costomers span{padding:0.4em; }

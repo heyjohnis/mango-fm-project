@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>고객관리</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]="queryText" (ionChange)="inpSearchKey()" placeholder="검색할 이름을 입력하세요"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item><ion-label>전체고객</ion-label>{{cnt_customers}}</ion-item>
+  <ion-list>
+    <!-- <ion-list-header>
+      <ion-label>최신등록고객</ion-label>
+    </ion-list-header> -->
+    <ion-item *ngFor="let customer of customers" (click)="gotoDetail(customer)" class="{{customer.family_key_yn2 == 'y' ? '':'cust_error'}}">
+    <ion-label class="list-name">
+      <span class="cust_nm">{{customer.cust_nm}}</span>
+      <span class="account_no">{{customer.account_no}}</span>
+      <span class="family_key family_key_{{customer.family_key_yn}}">{{customer.family_key_yn == 'y' ? '세대주' : customer.family_key_nm}} {{family_cds[customer.family_cd]}}</span>
+    </ion-label>
+    <div class="list-family_cd"></div>
+    <div class="list-date">{{customer.reg_date.substring(0,10)}}</div>
+	</ion-item>
+  </ion-list>
+</ion-content>

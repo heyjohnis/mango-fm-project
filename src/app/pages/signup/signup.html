@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Signup</ion-title>
+    <ion-title>회원가입</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,30 +16,39 @@
   <form #signupForm="ngForm" novalidate>
     <ion-list lines="none">
       <ion-item>
-        <ion-label position="stacked" color="primary">Username</ion-label>
+        <ion-label position="stacked" color="primary">성함</ion-label>
         <ion-input [(ngModel)]="signup.username" name="username" type="text" #username="ngModel" required>
         </ion-input>
       </ion-item>
       <ion-text color="danger">
         <p [hidden]="username.valid || submitted == false" class="ion-padding-start">
-          Username is required
+          성함을 입력하세요
         </p>
       </ion-text>
-
       <ion-item>
-        <ion-label position="stacked" color="primary">Password</ion-label>
+        <ion-label position="stacked" color="primary">이메일</ion-label>
+        <ion-input [(ngModel)]="signup.email" name="email" type="text" #email="ngModel" required>
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="email.valid || submitted == false" class="ion-padding-start">
+          이메일을 입력하세요
+        </p>
+      </ion-text>
+      <ion-item>
+        <ion-label position="stacked" color="primary">패스워드</ion-label>
         <ion-input [(ngModel)]="signup.password" name="password" type="password" #password="ngModel" required>
         </ion-input>
       </ion-item>
       <ion-text color="danger">
         <p [hidden]="password.valid || submitted == false" class="ion-padding-start">
-          Password is required
+          패스워드를 입력하세요
         </p>
       </ion-text>
     </ion-list>
 
     <div class="ion-padding">
-      <ion-button (click)="onSignup(signupForm)" type="submit" expand="block">Create</ion-button>
+      <ion-button (click)="onSignup(signupForm)" type="submit" expand="block">신청</ion-button>
     </div>
   </form>
 

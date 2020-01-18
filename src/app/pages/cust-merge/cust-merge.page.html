@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+	<ion-title>중복이름 고객</ion-title>
+	<ion-buttons class="btn_close" slot="end" (click) = "dismiss()">
+		<ion-icon name="close"></ion-icon>
+	</ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item><ion-label>중복고객 수</ion-label>{{cnt_customers}}</ion-item>
+  증권번호 비교해서 바로 합칠 고객을 판단 (개발중)
+  <ion-list>
+	<!-- <ion-list-header>
+	  <ion-label>최신등록고객</ion-label>
+	</ion-list-header> -->
+	<ion-item *ngFor="let customer of customers" (click)="mergeCust(customer.cust_id, customer.cust_id2)">
+	  <ion-label class="list-name">{{customer.cust_nm}} </ion-label>
+	  <div class="account">신규등록 계좌 : <span>{{customer.account_no}}</span></div>
+	  <div class="account"> 기존등록 계좌 : <span>{{customer.account_no2}}</span></div>
+	</ion-item>
+  </ion-list>
+</ion-content>

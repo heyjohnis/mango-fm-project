@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+	<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultHref"></ion-back-button>
+		</ion-buttons>
+	<ion-title>{{cust_nm}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-item><ion-label>고객번호</ion-label>{{cust_id}}</ion-item>
+<ion-item><ion-label>계좌번호</ion-label>{{account_no}}</ion-item>
+<!-- <ion-item>{{email}}</ion-item> -->
+<ion-item><ion-label>생년월</ion-label><ion-input></ion-input>{{birthday}}</ion-item>
+<ion-item>
+	<ion-label>세대주 여부</ion-label>
+	<ion-toggle slot="end" name="blueberry" [(ngModel)]="checkFamilyKey" (click)="checkFamilayKey()"></ion-toggle>
+</ion-item>
+<ion-item *ngIf="!checkFamilyKey">
+	<ion-label>관계</ion-label>
+	<ion-select [(ngModel)]="family_cd" okText="확인" cancelText="취소">
+		<ion-select-option value="01" selected>본인</ion-select-option>
+		<ion-select-option value="02">배우자</ion-select-option>
+		<ion-select-option value="03">자녀</ion-select-option>
+		<ion-select-option value="04">부모</ion-select-option>
+		<ion-select-option value="99">기타</ion-select-option>
+	</ion-select>
+</ion-item>
+<ion-item *ngIf="!checkFamilyKey" (click)="selectCust()">
+	<ion-label>세대주</ion-label>
+	{{family_key_nm}} {{family_key_no}}</ion-item>
+<ion-item><ion-label>등록일</ion-label>{{reg_date.substring(0,10)}}</ion-item>
+
+</ion-content>

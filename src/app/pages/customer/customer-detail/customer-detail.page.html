@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="defaultHref"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{cust_nm}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div #pieChart style="height:280px;"> </div>
+
+  <ion-item *ngFor="let date of dates" (click) = "gotoAssetResult(cust_id, cust_nm, date.balance_date, date.eval_account )" >
+    <ion-label>{{date.balance_date | toDate}}</ion-label>
+    <ion-label clsss="account align-right">{{date.eval_account | number }}<span>원</span></ion-label>
+    <ion-label class="rate align-right">{{date.profits_rate | percent:'1.1'}}</ion-label>
+	</ion-item>
+</ion-content>

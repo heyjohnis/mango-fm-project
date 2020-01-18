@@ -1,0 +1,16 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultHref"></ion-back-button>
+		</ion-buttons>
+		<ion-title>{{balance_date | toDate}}</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-item *ngFor="let customer of customers" (click) = "gotoAssetResult(customer.cust_id, customer.cust_nm, balance_date)">
+			<ion-label class="list-name">{{customer.cust_nm}} <span>{{customer.account_no}}</span></ion-label>
+			<div class="list-account">{{customer.eval_account | number}}</div>
+			<div class="list-rate align-right">{{customer.profits_rate | percent:'1.1'}}</div>
+	</ion-item>
+</ion-content>
