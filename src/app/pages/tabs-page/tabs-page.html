@@ -2,17 +2,22 @@
 
   <ion-tab-bar slot="bottom">
 
-    <ion-tab-button tab="home">
+    <ion-tab-button tab="home" *ngIf="!custLogin">
       <ion-icon name="home"></ion-icon>
       <ion-label>홈</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="customer">
+    <ion-tab-button tab="customer" *ngIf="!custLogin">
       <ion-icon name="contacts"></ion-icon>
       <ion-label>고객</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="asset">
+    <ion-tab-button tab="asset" *ngIf="!custLogin">
+      <ion-icon name="logo-usd"></ion-icon>
+      <ion-label>자산</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="my-asset" *ngIf="custLogin">
       <ion-icon name="logo-usd"></ion-icon>
       <ion-label>자산</ion-label>
     </ion-tab-button>
@@ -32,9 +37,9 @@
       <ion-label>Map</ion-label>
     </ion-tab-button>-->
 
-    <ion-tab-button tab="about">
+    <ion-tab-button tab="about" *ngIf="custLogin">
       <ion-icon name="information-circle"></ion-icon>
-      <ion-label>문의사항</ion-label>
+      <ion-label>소개</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 

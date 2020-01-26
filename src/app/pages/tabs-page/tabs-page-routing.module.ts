@@ -49,6 +49,19 @@ const routes: Routes = [
 				]
 			},
 			{
+				path: 'my-asset',
+				children: [
+					{
+						path: '',
+						loadChildren: () => import('../customer/customer-detail/customer-detail.module').then(m => m.CustomerDetailPageModule)
+					},
+					{
+						path: 'assetResult',
+						loadChildren: () => import('../asset/asset-result/asset-result.module').then(m => m.AssetResultPageModule)
+					}
+				]
+			},
+			{
 				path: 'asset',
 				children: [
 					{

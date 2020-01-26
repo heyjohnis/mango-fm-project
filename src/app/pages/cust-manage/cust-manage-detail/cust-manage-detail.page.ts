@@ -22,6 +22,7 @@ export class CustManageDetailPage implements OnInit {
 	private reg_date: string;
 	private family_cd: string;
 	private fp_id: string;
+	private login_code: string;
 
 	private checkFamilyKey: Boolean = false;
 	
@@ -44,7 +45,7 @@ export class CustManageDetailPage implements OnInit {
 		this.family_key_nm = this.route.snapshot.paramMap.get('family_key_nm');
 		this.family_key_yn = this.route.snapshot.paramMap.get('family_key_yn');
 		this.fp_id = this.route.snapshot.paramMap.get('fp_id');
-
+		this.login_code = this.route.snapshot.paramMap.get('login_code');
 		this.family_cd = this.route.snapshot.paramMap.get('family_cd');
 		this.reg_date = this.route.snapshot.paramMap.get('reg_date');
 		console.log("family_cd : ",this.family_cd);

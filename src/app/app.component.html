@@ -4,15 +4,15 @@
     <ion-menu contentId="main-content">
       <ion-header>
         <ion-toolbar>
-          <ion-title>ATS</ion-title>
+          <ion-title>FA Doctor</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <ion-content>
-        <ion-list lines="none" *ngIf="loggedIn">
-          <ion-list-header>
+        <ion-list lines="none" *ngIf="loggedIn && !custLogin">
+          <!-- <ion-list-header>
             Navigate
-          </ion-list-header>
+          </ion-list-header> -->
           <ion-menu-toggle autoHide="false" *ngFor="let p of appPages; let i = index">
             <ion-item [routerLink]="p.url" routerLinkActive="active" routerDirection="root" detail="false">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
@@ -20,12 +20,25 @@
                 {{p.title}}
               </ion-label>
             </ion-item>
+          </ion-menu-toggle>
 
+        </ion-list>
+        <ion-list lines="none" *ngIf="custLogin">
+          <ion-menu-toggle>
+            <ion-item routerLink="/my-asset" routerDirection="root">
+              <ion-icon slot="start" name="logo-usd"></ion-icon>
+              자산
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle>
+            <ion-item routerLink="/app/tabs/about" routerDirection="root">
+              <ion-icon slot="start" name="information-circle"></ion-icon>
+              소개
+            </ion-item>
           </ion-menu-toggle>
         </ion-list>
 
-        <ion-list *ngIf="loggedIn">
-
+        <ion-list lines="none" *ngIf="loggedIn">
           <ion-menu-toggle autoHide="false">
             <ion-item routerLink="/cust-manage" routerDirection="root">
               <ion-icon slot="start" name="person"></ion-icon>
@@ -36,27 +49,18 @@
           </ion-menu-toggle>
         </ion-list>
 
-        <ion-list *ngIf="loggedIn">
-
+        <ion-list lines="none" *ngIf="loggedIn">
           <ion-menu-toggle autoHide="false">
             <ion-item routerLink="/account" routerDirection="root">
-              <ion-icon slot="start" name="person"></ion-icon>
-              <ion-label>
-                FP 정보
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-
-
-          <ion-menu-toggle autoHide="false">
-            <ion-item routerLink="/account" routerDirection="root">
-              <ion-icon slot="start" name="person"></ion-icon>
+              <ion-icon slot="start" name="contact"></ion-icon>
               <ion-label>
                 회원정보
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
+        </ion-list>
 
+        <ion-list lines="none" *ngIf="loggedIn">
           <ion-menu-toggle autoHide="false">
             <ion-item routerLink="/support" routerDirection="root">
               <ion-icon slot="start" name="help"></ion-icon>
@@ -74,11 +78,9 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-
         </ion-list>
 
-        <ion-list *ngIf="!loggedIn">
-
+        <ion-list lines="none" *ngIf="!loggedIn">
           <ion-menu-toggle autoHide="false">
             <ion-item routerLink="/login" routerDirection="root">
               <ion-icon slot="start" name="log-in"></ion-icon>
@@ -105,7 +107,6 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-
         </ion-list>
 
       </ion-content>

@@ -18,7 +18,7 @@ export class UserData {
   HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
   //API_SERVER = 'http://jhouse.tjc.or.kr:8080';
   API_SERVER = 'http://localhost:8080';
-  user: UserOptions = { uid: '', user_id: '', email: '', username: '', password: '' };
+  user: UserOptions = { uid: '', user_id: '', email: '', username: '', password: '', file_nm: ''};
 
   constructor(
 	public http: HttpClient,

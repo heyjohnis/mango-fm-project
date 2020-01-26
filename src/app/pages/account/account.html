@@ -9,12 +9,14 @@
 
 <ion-content class="outer-content">
   <div *ngIf="username" class="ion-padding-top ion-text-center">
-    <img src="https://www.gravatar.com/avatar?d=mm&s=140" alt="avatar">
+    <label for="inp_file"> 
+    <img [src]="url" alt="avatar">
+    <input type="file" accept="image/*"  id="inp_file" style="display:none;" (change)="onChangeImage($event)" />
+    </label>
     <h2>{{username}}</h2>
-
     <ion-list inset>
-      <!-- <ion-item (click)="updatePicture()">사진업데이트</ion-item> -->
-      <!-- <ion-item (click)="changeUsername()">Change Username</ion-item> -->
+      <ion-item (click)="updatePicture()">사진업데이트</ion-item>
+      <ion-item (click)="changeUsername()">Change Username</ion-item>
       <ion-item>{{user_id}}</ion-item>
       <ion-item>{{email}}</ion-item>
       <ion-item (click)="changePassword()">패스워드 변경</ion-item>

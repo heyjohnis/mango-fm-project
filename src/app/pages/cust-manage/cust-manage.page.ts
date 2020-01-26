@@ -42,6 +42,7 @@ export class CustManagePage implements OnInit {
 		this.storage.get('user_data').then((data) => {
 				console.log("user_id: ", data.user_id);
 				this.getCustomers(data.user_id);
+				this.user_id = data.user_id;
 		}).catch((err)=>{
 			console.log("user_id : ", err);
 		});
@@ -90,6 +91,15 @@ export class CustManagePage implements OnInit {
 
 	gotoDetail(customer) {
 		this.router.navigate(['/cust-manage/detail' ,customer]);
+	}
+
+	genLoginKey(){
+		let formData = new FormData();
+		formData.append("fp_id", this.user_id);
+		formData.append("cust_id", "");
+		return this.api.post('cust/genLoginKey', formData).subscribe( (resp) => {
+			console.log(resp);
+		});
 	}
 
 }

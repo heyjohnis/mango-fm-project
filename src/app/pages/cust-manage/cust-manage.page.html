@@ -4,6 +4,9 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>고객관리</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="genLoginKey()">임시번호생성</ion-button>
+    </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
     <ion-searchbar [(ngModel)]="queryText" (ionChange)="inpSearchKey()" placeholder="검색할 이름을 입력하세요"></ion-searchbar>

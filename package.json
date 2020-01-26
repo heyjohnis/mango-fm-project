@@ -33,12 +33,12 @@
     "@ionic-native/status-bar": "5.0.0-beta.15",
     "@ionic/angular": "^4.11.6",
     "@ionic/storage": "^2.1.3",
-    "angularfire2": "^5.2.3",
-    "firebase": "^6.6.2",
     "angular-google-charts": "^0.1.6",
+    "angularfire2": "^5.2.3",
     "cordova-android": "^8.1.0",
     "cordova-ios": "^5.1.1",
     "cordova-plugin-device": "^2.0.3",
+    "cordova-plugin-firebase-authentication": "^3.0.2",
     "cordova-plugin-inappbrowser": "^3.1.0",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-ionic-webview": "^4.1.3",
@@ -46,13 +46,14 @@
     "cordova-plugin-statusbar": "^2.4.3",
     "cordova-plugin-whitelist": "^1.3.4",
     "core-js": "^3.4.1",
-    "rxjs": "^6.5.3",
-    "sw-toolbox": "3.6.0",
-    "tslib": "^1.10.0",
-    "zone.js": "~0.9.1",
+    "firebase": "^6.6.2",
     "lodash": "^4.17.15",
     "ng2-file-upload": "^1.4.0",
-    "ng2-google-charts": "^4.0.0"
+    "rxjs": "^6.5.3",
+    "scriptjs": "^2.5.9",
+    "sw-toolbox": "3.6.0",
+    "tslib": "^1.10.0",
+    "zone.js": "~0.9.1"
   },
   "devDependencies": {
     "@angular-devkit/architect": "^0.803.20",
@@ -94,7 +95,8 @@
       "cordova-plugin-whitelist": {},
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-statusbar": {},
-      "cordova-plugin-ionic-keyboard": {}
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-firebase-authentication": {}
     }
   }
 }

@@ -17,9 +17,28 @@ const routes: Routes = [
     loadChildren: () => import('./pages/support/support.module').then(m => m.SupportModule)
   },
   {
+    path: 'cust-manage',
+    children: [
+      {
+        path: '', 
+        loadChildren: () => import('./pages/cust-manage/cust-manage.module').then(m => m.CustManagePageModule)
+      },
+      {
+        path: 'detail',
+        loadChildren: () => import('./pages/cust-manage/cust-manage-detail/cust-manage-detail.module').then(m => m.CustManageDetailPageModule)
+      }
+    ]
+  },
+
+  {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
   },
+  {
+    path: 'login/anonymous',
+    loadChildren: () => import('./pages/login/anonymous-login/anonymous-login.module').then(m => m.AnonymousLoginPageModule)
+  },
+
   {
     path: 'signup',
     loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignUpModule)
@@ -32,6 +51,10 @@ const routes: Routes = [
     path: 'tutorial',
     loadChildren: () => import('./pages/tutorial/tutorial.module').then(m => m.TutorialModule),
     canLoad: [CheckTutorial]
+  },
+  {
+    path: 'my/:login_code',
+    loadChildren: () => import('./pages/my-asset/my-asset.module').then( m => m.MyAssetPageModule)
   }
 ];
 

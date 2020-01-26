@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
       icon: 'logo-usd'
     },
     {
-      title: '문의사항',
+      title: '소개',
       url: '/app/tabs/about',
       icon: 'information-circle'
     }
@@ -44,6 +44,8 @@ export class AppComponent implements OnInit {
 
   loggedIn = false;
   dark = false;
+  custLogin = false;
+
 
   constructor(
     private menu: MenuController,
@@ -100,6 +102,13 @@ export class AppComponent implements OnInit {
     }, 300);
   }
 
+  updateCustLoginStatus(loggedIn: boolean) {
+    setTimeout(() => {
+      this.custLogin = loggedIn;
+    }, 300);
+  }
+
+
   listenForLoginEvents() {
     console.log("listenForLoginEvents"); 
     window.addEventListener('user:login', () => {
@@ -115,6 +124,12 @@ export class AppComponent implements OnInit {
       console.log("listenForLoginEvents : logout"); 
       this.updateLoggedInStatus(false);
     });
+
+    window.addEventListener('user:login_code', () => {
+      console.log("listenForLoginEvents : login_code"); 
+      this.updateCustLoginStatus(true);
+    });    
+
   }
 
   logout() {

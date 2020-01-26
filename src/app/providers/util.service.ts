@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as Kakao from '../../assets/js/kakao.min';
 import * as _ from 'lodash';
 
 @Injectable({
@@ -53,6 +54,45 @@ export class UtilService {
         });
         return headers;
     }
+
+
+    shareKakao(date, account, rate, uri, image_url){
+        console.log("kakao image url : ",image_url);
+        Kakao.Link.createDefaultButton({
+        container: '#kakao-link-btn',
+        objectType: 'feed',
+        content: {
+            title: '고객님의 자산현황',
+            description: `기준일: ${this.setDataHyphen(date)} \n총자산: ${this.setComma(account)} / 수익률: ${rate}` ,
+            imageUrl:`${image_url}`,
+            link: {
+            mobileWebUrl:`${uri}`
+            }
+        },
+        buttons: [
+            {
+                title: '상세정보 보기',
+                link: {
+                    mobileWebUrl: `${uri}`
+                }
+            }
+        ]
+        });
+    }
+
+
+    setComma(num)  {
+        var regexp = /\B(?=(\d{3})+(?!\d))/g;
+        return num.toString().replace(regexp, ',');
+    }
+
+    setDataHyphen(date)  {
+        let year = date.substring(0, 4);
+        let month = date.substring(4,6);
+        let day = date.substring(6,8);
+        return year + '-' + month + '-' + day;
+    }
+
 	
 
 }

@@ -12,7 +12,7 @@ import { AlertController } from '@ionic/angular'
 })
 export class LoginPage {
 
-	login: UserOptions = { uid: '', user_id: '', email: '', username: '', password: '' };
+	login: UserOptions = { uid: '', user_id: '', email: '', username: '', password: '', file_nm: '' };
 	submitted = false;
 
 	constructor(

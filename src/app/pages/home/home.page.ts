@@ -17,13 +17,8 @@ declare var asset_cds: any;
 	templateUrl: './home.page.html',
 	styleUrls: ['./home.page.scss'],
 })
-export class HomePage implements OnInit, OnChanges {
+export class HomePage implements OnInit {
 	
-	ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-		console.log("Home On Changes!");
-		throw new Error("Method not implemented.");
-	}
-
 
 	public fileUploader: FileUploader = new FileUploader({});
 	public hasBaseDropZoneOver: boolean = false;
@@ -76,34 +71,13 @@ export class HomePage implements OnInit, OnChanges {
 			this.asset_cds = asset_cds;
 	}
 
-	ionViewWillEnter(){
-		console.log("home ionViewWillEnter");		
-	}
-
-	ionViewDidEnter(){
-		console.log("home ionViewDidEnter");
-		this.storage.get('user_data').then((data) => {
-			this.user_id = data.user_id;
-			this.getCustomList(data.user_id);
-			this.getUploadDate(data.user_id);
-		}).catch((err)=>{
-			console.log("get user date error: ", err);
-		});	
-	}
-
-	ionViewWillLeave(){
-		console.log("home ionViewWillLeave");
-	}
-
 	ngOnInit() {
+		this.init();
 		 console.log("home ngOnInit");
-		// this.storage.get('user_data').then((data) => {
-		// 	this.user_id = data.user_id;
-		// 	this.getCustomList(data.user_id);
-		// 	this.getUploadDate(data.user_id);
-		// }).catch((err)=>{
-		// 	console.log("get user date error: ", err);
-		// });
+		 window.addEventListener('user:login', () => {
+			console.log("Home Listenner : login"); 
+			this.init();
+		});   
 	}
 
 	fileOverBase( event ): void {
@@ -126,6 +100,30 @@ export class HomePage implements OnInit, OnChanges {
 		}, (err) => {
 			console.log("home cust",err);
 		});
+	}
+
+
+	init(){
+		this.storage.get('user_data').then((data) => {
+			// 간헐적으로 데이터 처리를 못해 한 번 더 호출
+			if(data == null) {
+				this.storage.get('user_data').then((data) => {
+					
+					if(data == null ) return this.router.navigateByUrl('/login');
+					else {
+						this.user_id = data.user_id;
+						this.getCustomList(data.user_id);
+						this.getUploadDate(data.user_id);	
+					}
+				});
+			} else {
+				this.user_id = data.user_id;
+				this.getCustomList(data.user_id);
+				this.getUploadDate(data.user_id);
+			}
+		}).catch((err)=>{
+			console.log("get user date error: ", err);
+		});	
 	}
 
 

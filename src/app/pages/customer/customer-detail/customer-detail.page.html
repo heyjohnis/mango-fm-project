@@ -2,6 +2,7 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="defaultHref"></ion-back-button>
+      <ion-menu-button *ngIf="custLogin"></ion-menu-button>
     </ion-buttons>
     <ion-title>{{cust_nm}}</ion-title>
   </ion-toolbar>
@@ -14,5 +15,11 @@
     <ion-label>{{date.balance_date | toDate}}</ion-label>
     <ion-label clsss="account align-right">{{date.eval_account | number }}<span>원</span></ion-label>
     <ion-label class="rate align-right">{{date.profits_rate | percent:'1.1'}}</ion-label>
-	</ion-item>
+  </ion-item>
+    <!-- fab placed to the (vertical) center and end -->
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" id="kakao" [hidden]="custLogin">
+      <ion-fab-button id="kakao-link-btn" color="kakao">
+        <ion-icon name="share"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
 </ion-content>

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { Api } from '../../../providers/api/api';
+
 import * as _ from 'lodash';
 
 declare var asset_cds: any;
@@ -111,7 +112,24 @@ export class AssetResultPage implements OnInit {
 
 	}
 
-	
+	viewDetail(g_idx, asset_idx){
+		const els = document.querySelectorAll<HTMLInputElement>(".more_info");
+		els.forEach((el) => {el.style.height = "0";});
+		let target = document.querySelector<HTMLInputElement>("#more_info_"+g_idx+"_"+asset_idx);
+		let height = target.style.height;
+		console.log(height);
+		if(height == '100%') target.style.height = '0';
+		else target.style.height = '100%';
+	}
 
-
+	// setKakaoMessage(){
+	// 	let balance_date = this.balance_date;
+	// 	let eval_account = this.eval_account;
+	// 	let profits_rate = this.profits_rate * 100 + '%';
+	// 	let uri = this.domain+'my/'+this.login_code;
+	// 	console.log("first date ", this.uri);
+	// 	setTimeout(() => {
+	// 	  this.util.shareKakao(this.balance_date, this.total_account, this.profits_rate, this.uri, this.image_url);
+	// 	}, 1000);
+	//   }
 }

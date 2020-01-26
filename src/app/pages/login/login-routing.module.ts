@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: LoginPage
+  },
+  {
+    path: 'anonymous-login',
+    loadChildren: () => import('./anonymous-login/anonymous-login.module').then( m => m.AnonymousLoginPageModule)
   }
 ];
 
