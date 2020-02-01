@@ -24,7 +24,7 @@ export class AssetResultPage implements OnInit {
 	public asset_cds: any;
 	public asset_chart_data: any = [["자산종류", "금액"]];
 
-	public ages: any = {upper: 0, lower:0};
+	public ages: any = {upper: 60 , lower:35};
 	public birthYYYY: string = '';
 	public birthMM: string = '';
 
@@ -100,8 +100,8 @@ export class AssetResultPage implements OnInit {
 		if(Number(this.birthYYYY) == 0) this.current_age = 35;
 		this.retired_age = 60;
 
-		this.current_age = this.ages.lower;
-		this.retired_age = this.ages.upper;
+		//this.current_age = this.ages.upper;
+		this.retired_age = this.ages.lower;
 
 		if(this.current_age > this.retired_age) this.retired_age = this.current_age;
 		this.ages = {upper: this.retired_age, lower:this.current_age}
@@ -114,6 +114,9 @@ export class AssetResultPage implements OnInit {
 	}
 
 	calcRetirePlan(){
+
+		
+
 		this.calcFV();
 		this.calcPMT();
 		this.calaPV();

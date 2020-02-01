@@ -11,7 +11,7 @@ export class Api {
 
   domain: string = "";
   //url: string = 'http://jhouse.tjc.or.kr:8080';
-  url: string = "";
+  url: string = "http://211.49.99.112:8080";
   
   constructor(
     public http: HttpClient, 
@@ -22,7 +22,7 @@ export class Api {
     console.log("get url: ",window.location.href);
     console.log("isPlatformBrowser: ", isPlatformBrowser);
     this.domain = this.getDomain(window.location.href);
-    this.url = "http://"+this.domain+":8080";
+    //this.url = "http://"+this.domain+":8080";
     console.log(this.url);
   }
 
