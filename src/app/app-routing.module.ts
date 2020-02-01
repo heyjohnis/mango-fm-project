@@ -55,6 +55,37 @@ const routes: Routes = [
   {
     path: 'my/:login_code',
     loadChildren: () => import('./pages/my-asset/my-asset.module').then( m => m.MyAssetPageModule)
+  },
+  {
+    path: 'user-manage',
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/user-manage/user-manage.module').then( m => m.UserManagePageModule),
+      },
+      {
+        path: 'detail',
+        loadChildren: () => import('./pages/user-manage/user-manage-detail/user-manage-detail.module').then( m => m.UserManageDetailPageModule)
+      }
+    ]
+  },
+  {
+    path: 'board',
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/board/board.module').then( m => m.BoardPageModule)
+      },
+      {
+        path: 'detail',
+        loadChildren: () => import('./pages/board/board-detail/board-detail.module').then( m => m.BoardDetailPageModule)
+      },
+      {
+        path: 'edit',
+        loadChildren: () => import('./pages/board/board-edit/board-edit.module').then( m => m.BoardEditPageModule)
+      }
+    ]
+    
   }
 ];
 

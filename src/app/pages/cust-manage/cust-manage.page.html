@@ -23,7 +23,7 @@
     <ion-label class="list-name">
       <span class="cust_nm">{{customer.cust_nm}}</span>
       <span class="account_no">{{customer.account_no}}</span>
-      <span class="family_key family_key_{{customer.family_key_yn}}">{{customer.family_key_yn == 'y' ? '세대주' : customer.family_key_nm}} {{family_cds[customer.family_cd]}}</span>
+      <span class="family_key family_key_{{customer.family_key_yn}}">{{customer.family_key_yn == 'y' ? '대표계좌' : customer.family_key_nm + ' ' + customer.family_key_account_no}} </span>
     </ion-label>
     <div class="list-family_cd"></div>
     <div class="list-date">{{customer.reg_date.substring(0,10)}}</div>

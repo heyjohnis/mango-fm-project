@@ -18,6 +18,8 @@ export class AccountPage implements AfterViewInit {
   email: string;
   user_id: string;
   url: string =  "https://www.gravatar.com/avatar?d=mm&s=140";
+  public birthYYYY: string;
+  public birthMM: string;
 
   constructor(
     public alertCtrl: AlertController,
@@ -28,7 +30,6 @@ export class AccountPage implements AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
-    //this.getUsername();
     this.getUserData();
   }
 
@@ -65,7 +66,7 @@ export class AccountPage implements AfterViewInit {
   }
 
   getUserData() {
-    this.userData.getUserData().then( ( data) => {
+    this.userData.getUserData().then( (data) => {
       console.log("data : " , data);
       this.username = data.user_nm;
       this.user_id = data.user_id;

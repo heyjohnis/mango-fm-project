@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+	  <ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultHref"></ion-back-button>
+		</ion-buttons>
+    <ion-title>{{user_nm}}</ion-title>
+    <!-- <ion-buttons slot="end"><ion-icon name="more"></ion-icon></ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-item><ion-label>고객번호</ion-label>{{user_id}}</ion-item>
+<ion-item><ion-label>이메일</ion-label>{{email}}</ion-item>
+
+<ion-item>
+  <ion-label>생년월</ion-label> 
+  {{birthYYYY}}/{{birthMM}}
+</ion-item>
+
+<ion-item>
+  <ion-label>사용자 유형</ion-label>
+  <ion-select [(ngModel)]="user_type" okText="확인" cancelText="취소" (ionChange)="updateUserInfo()">
+		<ion-select-option value="01" selected>고객</ion-select-option>
+		<ion-select-option value="10">FA</ion-select-option>
+		<ion-select-option value="99">관리자</ion-select-option>
+	</ion-select>
+
+</ion-item>
+<ion-item><ion-label>등록일</ion-label>{{reg_date.substring(0,10)}}</ion-item>
+<ion-button expand="full" (click)="confirmDeleteUser()">사용자 삭제</ion-button>
+<ion-button expand="full" (click)="userChange()">사용자 전환</ion-button>
+</ion-content>

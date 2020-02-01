@@ -21,7 +21,6 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-
         </ion-list>
         <ion-list lines="none" *ngIf="custLogin">
           <ion-menu-toggle>
@@ -61,6 +60,14 @@
         </ion-list>
 
         <ion-list lines="none" *ngIf="loggedIn">
+          <ion-menu-toggle autoHide="false">
+            <ion-item routerLink="/board" routerDirection="root">
+              <ion-icon slot="start" name="clipboard"></ion-icon>
+              <ion-label>
+                알림사항
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
           <ion-menu-toggle autoHide="false">
             <ion-item routerLink="/support" routerDirection="root">
               <ion-icon slot="start" name="help"></ion-icon>
@@ -110,6 +117,17 @@
         </ion-list>
 
       </ion-content>
+
+      <ion-footer>
+          <ion-menu-toggle autoHide="false">
+            <ion-item routerLink="/user-manage" routerDirection="root">
+              <ion-icon slot="start" name="cog"></ion-icon>
+              <ion-label>
+                사용자관리
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+      </ion-footer>
     </ion-menu>
 
     <ion-router-outlet id="main-content"></ion-router-outlet>

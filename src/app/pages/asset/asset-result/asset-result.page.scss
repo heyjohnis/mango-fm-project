@@ -1,11 +1,21 @@
 // .account, .rate{justify-content:center; font-size:1.3em;}
 // .account span{font-size:0.7em;}
 
-.asset_info{font-size:0.95em; }
-.more_info{font-size:0.9em; text-align: right; 
-    /*transition: all ease 0.3s 0s; */
+.asset_info{font-size:0.95em;}
+.more_info{
+    height:0;
+    font-size:0.9em; 
+    text-align: right; 
+    transition: height 0.2s ease-in-out;
 } 
+.more .more_info{height:100%;}
+
+.more_icon{margin-top:0.2em; color:#999; font-size:0.8em;}
+.remove{display: none;;}
+.more .add{display: none;}
+.more .remove{display: block;}
 .info{padding:0;}
 .more_info ion-label{font-size:0.9em; text-align: left; color:var(--ion-color-medium)}
 .hidden_info{height:0; overflow: hidden;}
 .show_info{height:100%;}
+

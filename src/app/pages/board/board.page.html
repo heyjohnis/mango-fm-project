@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>알림사항</ion-title>
+  </ion-toolbar>
+  <!-- <ion-toolbar>
+    <ion-searchbar [(ngModel)]="queryText" (ionChange)="inpSearchKey()" placeholder="검색할 이름을 입력하세요"></ion-searchbar>
+  </ion-toolbar> -->
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let content of contents" (click)="gotoDetail(content.seq)">
+		<ion-label >{{content.title}} </ion-label>
+		<div class="list-date">{{content.reg_date.substring(0,10)}}</div>
+	</ion-item>
+  </ion-list>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+

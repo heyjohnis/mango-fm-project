@@ -15,22 +15,55 @@
 	<ion-item class="rate">
 		<ion-label>수익률</ion-label> {{profits_rate | percent:'1.1'}}
 	</ion-item>	
-
+	<ion-item class="account">
+		<ion-label>손익</ion-label> {{balance_account | number}} 원
+	</ion-item>	
 	<div #pieChart style="height:280px;"> </div>
+	
+	<section>
+		<ion-button expand="block" sharp="round" color="secondary">은퇴 시뮬레이션</ion-button>
+		<ion-item >
+			<ion-grid>
+				<ion-row>
+				<ion-col size="4"><ion-label>현재나이</ion-label><ion-input type="number" pattern="\d*" [(ngModel)]="current_age" (change)="calcRetirePlan()"></ion-input></ion-col>
+				<ion-col size="4"><ion-label>은퇴나이</ion-label><ion-input type="number" pattern="\d*" [(ngModel)]="retired_age" (change)="calcRetirePlan()"></ion-input></ion-col>
+				<ion-col size="4"><ion-label>연금수령기간</ion-label><ion-input type="number" pattern="\d*" [(ngModel)]="period_pension" (change)="calcRetirePlan()"></ion-input></ion-col>
+				<ion-col size="6"><ion-label>월적립액</ion-label><ion-input type="number" pattern="\d*" [(ngModel)]="pmt" (change)="calcRetirePlan()"></ion-input></ion-col>
+				<ion-col size="6"><ion-label>은퇴시점적립액</ion-label>{{retired_fv | number}}</ion-col>
+				<ion-col size="4"><ion-label>기대수익률(적립기)</ion-label><ion-input type="number" pattern="\d*" [(ngModel)]="invest_before_rate" (change)="calcRetirePlan()"></ion-input></ion-col>
+				<ion-col size="4"><ion-label>기대수익률(인출기)</ion-label><ion-input type="number" pattern="\d*" [(ngModel)]="invest_after_rate" (change)="calcRetirePlan()"></ion-input></ion-col>
+				<ion-col size="4"><ion-label>물가상승률</ion-label><ion-input type="number" pattern="\d*" [(ngModel)]="inflation_rate" (change)="calcRetirePlan()"></ion-input></ion-col>
+				<ion-col size="6"><ion-label>잔존자산</ion-label><ion-input type="number" pattern="\d*" [(ngModel)]="remain_asset" (change)="calcRetirePlan()"></ion-input></ion-col>
+				<ion-col size="6"><ion-label>은퇴시점 연금액</ion-label>{{annuity_fv | number}}</ion-col>
+				<ion-col size="6"><ion-label>현재가치 연금액</ion-label>{{annuity_pv | number}}</ion-col>
 
+				</ion-row>
 
+				<ion-row>
+					<ion-col size="1">현재나이{{ages.lower}}</ion-col>
+					<ion-col size="10">
+						<ion-range id="ages" dualKnobs="true" min="20" max="70" step="1" snaps="false" pin="true" [(ngModel)]="ages" (change)="calcRetirePlan()"></ion-range>
+					</ion-col>
+					<ion-col size="1">{{ages.upper}}</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ion-item>
+	</section>
 	<ion-list *ngFor="let assets of assets_group; let i = index">
 		<ion-list-header >{{asset_cds[assets.asset_cd]}}</ion-list-header>
 		<ion-list >
 			<ion-item *ngFor="let asset of assets.assets; let j = index" class="view_detail">
 				<ion-grid>
-					<ion-row class="asset_info" (click)="viewDetail(i, j);"> 
+					<ion-row class="asset_info" (click)="viewDetail(i, j);" id="more_info_{{i}}_{{j}}"> 
 						<ion-col size="6"><ion-label class="asset-name">{{asset.fund_nm }}</ion-label></ion-col>
 						<ion-col size="3.5" class="align-right">{{asset.eval_account | number}}</ion-col>
 						<ion-col size="2" class="align-right">{{asset.profits_rate | percent:'1.1'}}</ion-col>
-						<ion-col size="0.5" class="align-right"><ion-icon name="add"></ion-icon></ion-col>
+						<ion-col size="0.5" class="align-right expand_icon">
+							<ion-icon name="add" class="more_icon add"></ion-icon>
+							<ion-icon name="remove" class="more_icon remove"></ion-icon>
+						</ion-col>
 						<ion-col size="12" class="info">
-							<div class="more_info hidden_info" id="more_info_{{i}}_{{j}}">
+							<div class="more_info hidden_info">
 								<ion-row>
 									<ion-col size="3"><ion-label>자산명</ion-label></ion-col>
 									<ion-col size="9">{{asset.fund_nm }}</ion-col>
@@ -42,6 +75,10 @@
 								<ion-row>
 									<ion-col size="3"><ion-label>수익률</ion-label></ion-col>
 									<ion-col size="9">{{asset.profits_rate | percent:'1.1'}}</ion-col>
+								</ion-row>
+								<ion-row>
+									<ion-col size="3"><ion-label>손익</ion-label></ion-col>
+									<ion-col size="9">{{asset.eval_account - asset.inp_account | number}}원</ion-col>
 								</ion-row>
 								<ion-row>
 									<ion-col size="3"><ion-label>개설일</ion-label></ion-col>

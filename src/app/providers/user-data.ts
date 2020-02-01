@@ -65,12 +65,14 @@ export class UserData {
 	
 
 
-  signup(value) {
+  signup(value, cust_id) {
 	return new Promise<any>((resolve, reject) => {
 	  this.storage.set(this.HAS_LOGGED_IN, true);
 	  firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
 	  //.then(res => resolve(res), err => reject(err));
 	  .then((res) => {
+		
+		
 		console.log("sign-up-res: ",res);
 
 		let user = firebase.auth().currentUser;
@@ -80,6 +82,7 @@ export class UserData {
 		formData.append("firebase_id", res.user.uid);
 		formData.append("email", res.user.email);
 		formData.append("user_nm", value.username);
+		formData.append("cust_id", cust_id);
 		
 		// Spring 회원가입
 		this.regUser(formData);

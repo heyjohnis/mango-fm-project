@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, AlertController } from '@ionic/angular';
 import { CustListPage } from '../../cust-list/cust-list.page';
 import { Api } from '../../../providers/api/api';
+import { UtilService } from '../../../providers/util.service';
 
 @Component({
 	selector: 'cust-manage-detail',
@@ -16,8 +17,15 @@ export class CustManageDetailPage implements OnInit {
 	private account_no: string;
 	private email: string;
 	private birthday: string;
+	private birthYYYY: string;
+	private birthMM: string;
+	private years: any = [];
+	private months: any = [];
+
 	private family_key_yn: string;
 	private family_key_no: string;
+	private family_key_account_no: string;
+
 	private family_key_nm: string;
 	private reg_date: string;
 	private family_cd: string;
@@ -32,7 +40,8 @@ export class CustManageDetailPage implements OnInit {
 		private route: ActivatedRoute,
 		private modalController: ModalController,
 		private api: Api,
-		private alertCtl: AlertController
+		private alertCtl: AlertController,
+		private util: UtilService
 		) { }
 
 	ngOnInit() {
@@ -44,12 +53,20 @@ export class CustManageDetailPage implements OnInit {
 		this.family_key_no = this.route.snapshot.paramMap.get('family_key_no');
 		this.family_key_nm = this.route.snapshot.paramMap.get('family_key_nm');
 		this.family_key_yn = this.route.snapshot.paramMap.get('family_key_yn');
+		this.family_key_account_no = this.route.snapshot.paramMap.get('family_key_account_no');
 		this.fp_id = this.route.snapshot.paramMap.get('fp_id');
 		this.login_code = this.route.snapshot.paramMap.get('login_code');
 		this.family_cd = this.route.snapshot.paramMap.get('family_cd');
 		this.reg_date = this.route.snapshot.paramMap.get('reg_date');
-		console.log("family_cd : ",this.family_cd);
 
+		if(this.birthday != null && this.birthday.indexOf("/") > 0) {
+			this.birthYYYY = this.birthday.split('/')[0];
+			this.birthMM = this.birthday.split('/')[1];
+		}
+		
+		let this_year = new Date().getFullYear();
+		for(let i = 0; i < this_year - 1950; i++ ) this.years[i] = 1950 + i;
+		for(let i = 0; i < 12 ; i++ ) this.months[i] = this.util.pad(i+1, 2);	
 		if(this.family_key_yn == 'y') this.checkFamilyKey = true;
 
 		console.log("customer info: ", this.route.snapshot.paramMap);
@@ -65,60 +82,76 @@ export class CustManageDetailPage implements OnInit {
 		await modal.present();
 		const { data } = await modal.onWillDismiss();
 		if (data) {
-			this.setFamilyKey(this.cust_id, data.cust_id, '', this.family_cd);
+			this.setFamilyKey(data.cust_id, data.cust_id, '');
 		}
 	}
 
-	setFamilyKey(cust_id, family_key_no, family_key_yn, family_cd){
+	setFamilyKey(cust_id, family_key_no, family_key_yn){
+		
+		if(this.cust_id == cust_id) {
+			family_key_yn = 'y';
+		}
+		
 		let formData = new FormData();
-		formData.append("cust_id", cust_id);
+		formData.append("cust_id", this.cust_id);
 		formData.append("family_key_no", family_key_no);
-		formData.append("family_cd", family_cd ? family_cd : '01');
 		formData.append("family_key_yn", family_key_yn);
+		formData.append("family_cd",'');
 		formData.append("fp_id", this.fp_id);
 
 		return this.api.post('cust/updateFamilyKeyNo', formData).subscribe( (resp) => {
 			console.log(resp);
+
 		});
 
 	}
 
-	checkFamilayKey(data){
-		if(this.checkFamilyKey == true) {
-			this.checkFamilyKey = true;
-		} else {
-			this.checkFamilyKey = false;
-			this.confirmUpdateFamilyKey();
-		}
-		console.log(this.checkFamilyKey);
-	}
+	// checkFamilayKey(data){
+	// 	if(this.checkFamilyKey == true) {
+	// 		this.checkFamilyKey = true;
+	// 	} else {
+	// 		this.checkFamilyKey = false;
+	// 		this.confirmUpdateFamilyKey();
+	// 	}
+	// 	console.log(this.checkFamilyKey);
+	// }
 
-
-
-	async confirmUpdateFamilyKey() {
-		console.log("confirmUpdateFamilyKey");
-		const alert = await this.alertCtl.create({
-		  header: '확인',
-		  subHeader: '고객정보',
-		  message: '세대주로 변경하시겠습니까?',
-		  buttons: [
-			{
-			  text: '아니오',
-			  role: 'cancel',
-			  cssClass: 'secondary',
-			  handler: (blah) => {
-				console.log('Confirm Cancel: blah');
-			  }
-			}, {
-			  text: '네',
-			  handler: () => {
-				this.setFamilyKey(this.cust_id, this.cust_id, 'y', '');
-			  }
-			}
-		  ]
+	updateBirthday(){
+		
+		let formData = new FormData();
+		formData.append("cust_id", this.cust_id);
+		let birthday = this.birthYYYY + "/" + this.birthMM;
+		formData.append("birthday", birthday);
+		console.log("birthday : ", birthday);
+		return this.api.post('cust/updateBirthday', formData).subscribe( (resp) => {
+			console.log(resp);
 		});
-		await alert.present();
-
 	}
+
+	// async confirmUpdateFamilyKey() {
+	// 	console.log("confirmUpdateFamilyKey");
+	// 	const alert = await this.alertCtl.create({
+	// 	  header: '확인',
+	// 	  subHeader: '고객정보',
+	// 	  message: '세대주로 변경하시겠습니까?',
+	// 	  buttons: [
+	// 		{
+	// 		  text: '아니오',
+	// 		  role: 'cancel',
+	// 		  cssClass: 'secondary',
+	// 		  handler: (blah) => {
+	// 			console.log('Confirm Cancel: blah');
+	// 		  }
+	// 		}, {
+	// 		  text: '네',
+	// 		  handler: () => {
+	// 			this.setFamilyKey(this.cust_id, this.cust_id, 'y', '');
+	// 		  }
+	// 		}
+	// 	  ]
+	// 	});
+	// 	await alert.present();
+
+	// }
 
 }

@@ -3,6 +3,7 @@ import { Router,ActivatedRoute } from '@angular/router';
 import { Api } from '../../../providers/api/api';
 
 import * as _ from 'lodash';
+import { UtilService } from '../../../providers/util.service';
 
 declare var asset_cds: any;
 
@@ -18,9 +19,33 @@ export class AssetResultPage implements OnInit {
 	public cust_id: string = '';
 	public cust_nm: string = '';
 	public eval_account: string = '';
+	public balance_account: string = '';
 	public profits_rate: string = '';
 	public asset_cds: any;
 	public asset_chart_data: any = [["자산종류", "금액"]];
+
+	public ages: any = {upper: 0, lower:0};
+	public birthYYYY: string = '';
+	public birthMM: string = '';
+
+	public birthday: string = '';
+	public current_age: number = 0;
+	public retired_age: number = 0;
+	public death_age: number = 0;
+	public period_pension: number = 20;
+
+	public save_period: number = 0;
+
+	public pmt: number = 0;
+
+	public invest_before_rate: number = 0;
+	public invest_after_rate: number = 0;
+	public inflation_rate: number = 0;
+	
+	public retired_fv: number = 0;
+	public remain_asset: number = 0;
+	public annuity_fv: number = 0;
+	public annuity_pv: number = 0;
 
 	@ViewChild('pieChart', {static: false}) pieChart: ElementRef;
 
@@ -42,18 +67,89 @@ export class AssetResultPage implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private api: Api,
-		private router: Router
+		private router: Router,
+		private util: UtilService
 	) { 
 		this.asset_cds = asset_cds;
 	}
+
+
+
 
 	ngOnInit() {
 		this.cust_id = this.route.snapshot.paramMap.get('cust_id');
 		this.balance_date = this.route.snapshot.paramMap.get('balance_date');
 		this.cust_nm = this.route.snapshot.paramMap.get('cust_nm');
 		this.eval_account = this.route.snapshot.paramMap.get('eval_account');
-
+		this.birthday = this.route.snapshot.paramMap.get('birthday');
 		this.getAssetResult();
+		this.init();
+	}
+
+	init(){
+
+		let this_year = new Date().getFullYear();
+		let this_month = this.util.pad(new Date().getMonth() + 1, 2);
+		if(this.birthday != null && this.birthday.indexOf("/") > 0) {
+			this.birthYYYY = this.birthday.split('/')[0];
+			this.birthMM = this.birthday.split('/')[1];
+		}
+
+		this.current_age = this_year - Number(this.birthYYYY) + (this_month > this.birthMM ? 0 : 1);
+		// console.log("calc age", this.current_age, this.birthYYYY, this_month);
+		if(Number(this.birthYYYY) == 0) this.current_age = 35;
+		this.retired_age = 60;
+
+		this.current_age = this.ages.lower;
+		this.retired_age = this.ages.upper;
+
+		if(this.current_age > this.retired_age) this.retired_age = this.current_age;
+		this.ages = {upper: this.retired_age, lower:this.current_age}
+		this.invest_before_rate = 5;
+		this.invest_after_rate = 4;
+		this.inflation_rate = 3;
+
+		this.calcRetirePlan();
+
+	}
+
+	calcRetirePlan(){
+		this.calcFV();
+		this.calcPMT();
+		this.calaPV();
+	}
+
+	calcFV(){
+		this.retired_fv = Math.round(
+			this.util.calcFv(
+				this.invest_before_rate/100, 
+				this.retired_age - this.current_age, 
+				this.pmt*12, 
+				this.eval_account
+		));
+	}
+
+	calcPMT(){
+		this.annuity_fv = 
+		Math.round(
+		this.util.calcPMT(
+			this.invest_after_rate/100, 
+			this.period_pension, 
+			this.retired_fv, 
+			this.remain_asset, 
+			0
+		) / 12);
+	}
+
+	calaPV(){
+		this.annuity_pv = 
+			Math.round(this.util.calcPV(
+			this.inflation_rate/100, 
+			this.retired_age - this.current_age, 
+			0, 
+			this.annuity_fv, 
+			0));
+		
 	}
 
 	getAssetResult(){
@@ -62,11 +158,9 @@ export class AssetResultPage implements OnInit {
 		formData.append("balance_date", this.balance_date);
 		return this.api.post('fund/assetResult', formData).subscribe( (resp: any) => {
 			console.log("assets : ", resp);
-
 			this.setAssetData(resp.assets);
 			this.setChart();
 			this.setTotal(resp.present);
-
 		});
 	}
 
@@ -109,17 +203,23 @@ export class AssetResultPage implements OnInit {
 	setTotal(data){
 		this.eval_account = data.eval_account;
 		this.profits_rate = data.profits_rate;
-
+		this.balance_account = data.balance_account;
 	}
 
 	viewDetail(g_idx, asset_idx){
-		const els = document.querySelectorAll<HTMLInputElement>(".more_info");
-		els.forEach((el) => {el.style.height = "0";});
-		let target = document.querySelector<HTMLInputElement>("#more_info_"+g_idx+"_"+asset_idx);
-		let height = target.style.height;
-		console.log(height);
-		if(height == '100%') target.style.height = '0';
-		else target.style.height = '100%';
+		const el = document.querySelector<HTMLInputElement>("#more_info_"+g_idx+"_"+asset_idx);		
+		let has_add = el.classList.contains('more');
+		if(has_add) 
+			el.classList.remove('more');
+		else 
+			el.classList.add('more');
+		
+		//els.forEach((el) => {el.style.height = "0";});
+		// let target = document.querySelector<HTMLInputElement>("#more_info_"+g_idx+"_"+asset_idx+" .more_info");
+		// let height = target.style.height;
+		// console.log(height);
+		// if(height == '100%') target.style.height = '0';
+		// else target.style.height = '100%';
 	}
 
 	// setKakaoMessage(){

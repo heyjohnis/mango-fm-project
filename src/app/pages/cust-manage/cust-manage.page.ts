@@ -23,7 +23,6 @@ export class CustManagePage implements OnInit {
 	private cnt_customers = 0;
 	private order_by:any = {"cust_nm": "asc", "reg_date": "desc", "eval_account": "desc", "profits_rate": "desc"};
 	private family_cds;
-	
 	constructor( 
 		private storage: Storage,
 		private router: Router,
