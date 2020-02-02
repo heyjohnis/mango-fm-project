@@ -58,9 +58,9 @@ export class CustManagePage implements OnInit {
 		return this.api.post('cust/getCustomerManageList', formData).subscribe( (resp) => {
 			this.customers = resp;
 
-			// this.storage.set("customers", resp).then((data)=>{
-			// 	console.log("Set Storage - customer : ", data)
-			// });
+			this.storage.set("customers", resp).then((data)=>{
+				console.log("Set Storage - customer : ", data)
+			});
 
 			this.cnt_customers = this.customers.length;
 		});
