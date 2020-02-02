@@ -19,3 +19,23 @@
 .hidden_info{height:0; overflow: hidden;}
 .show_info{height:100%;}
 
+.retired_simulation{padding:1em;}
+.retired_simulation ion-grid{padding:1em; background:var(--ion-color-light);}
+.retired_simulation ion-grid.close{height:0; overflow: hidden; padding:0; transition: height 0.2s ease-in-out;}
+
+.ages_range ion-col, .ages_range input{margin:0; padding:0; text-align:center;}
+.ages_range span{font-size:0.8em;}
+.ages_range .sc-ion-input-md-h{--padding-start:0;}
+
+.retired_age ion-col, .period_pension ion-col{display:flex; align-items:center;}
+.retired_age ion-col span, .period_pension ion-col span{width:100%; margin-top:0.1em; text-align: right;}
+
+.calculate{padding:1em;}
+.calculate ion-input{text-align: right;}
+.calculate ion-input input{text-align: right;}
+
+.input_rate{height:100%; overflow: hidden; transition: height 0.2s ease-in-out;}
+.input_rate.close{height:0; transition: height 0.2s ease-in-out;}
+
+.btn_rate span{margin-left:1em; font-size:0.9em; color:var(--ion-color-light)}
+.input_rate ion-input{text-align: right;}

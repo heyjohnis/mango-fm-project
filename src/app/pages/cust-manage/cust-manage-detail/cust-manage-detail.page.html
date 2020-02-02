@@ -8,36 +8,20 @@
 </ion-header>
 
 <ion-content>
-<ion-item><ion-label>고객번호</ion-label>{{cust_id}}</ion-item>
-<ion-item><ion-label>계좌번호</ion-label>{{account_no}}</ion-item>
-<ion-item (click)="selectCust()">
-	<ion-label>대표계좌지정</ion-label>
-	{{family_key_nm}} {{family_key_account_no}}</ion-item>
-<ion-item routerLink="/my/{{login_code}}"><ion-label>로그인 코드</ion-label>{{login_code}}</ion-item>
-<!-- <ion-item>{{email}}</ion-item> -->
-<ion-item><ion-label>생년월</ion-label>
-	<ion-select [(ngModel)]="birthYYYY" okText="확인" cancelText="취소" (ionChange)="updateBirthday()">
-		<ion-select-option *ngFor="let year of years" value="{{year}}">{{year}}</ion-select-option>
-	</ion-select>
-	<ion-select [(ngModel)]="birthMM" okText="확인" cancelText="취소" (ionChange)="updateBirthday()">
-		<ion-select-option *ngFor="let month of months" value="{{month}}">{{month}}</ion-select-option>
-	</ion-select>
-</ion-item>
-<!-- <ion-item>
-	<ion-label>세대주 여부</ion-label>
-	<ion-toggle slot="end" name="blueberry" [(ngModel)]="checkFamilyKey" (click)="checkFamilayKey()"></ion-toggle>
-</ion-item>
-<ion-item *ngIf="!checkFamilyKey">
-	<ion-label>관계</ion-label>
-	<ion-select [(ngModel)]="family_cd" okText="확인" cancelText="취소">
-		<ion-select-option value="01" selected>본인</ion-select-option>
-		<ion-select-option value="02">배우자</ion-select-option>
-		<ion-select-option value="03">자녀</ion-select-option>
-		<ion-select-option value="04">부모</ion-select-option>
-		<ion-select-option value="99">기타</ion-select-option>
-	</ion-select>
-</ion-item> -->
-
-<ion-item><ion-label>등록일</ion-label>{{reg_date.substring(0,10)}}</ion-item>
-
+	<ion-item><ion-label>고객번호</ion-label>{{cust_id}}</ion-item>
+	<ion-item><ion-label>계좌번호</ion-label><span class="label" *ngIf="account_no==family_key_account_no">대표계좌</span>{{account_no}}</ion-item>
+	<ion-item (click)="selectCust()">
+		<ion-label>대표계좌지정</ion-label>
+		{{family_key_nm}} {{family_key_account_no}}</ion-item>
+	<ion-item routerLink="/my/{{login_code}}"><ion-label>로그인 코드</ion-label>{{login_code}}</ion-item>
+	<!-- <ion-item>{{email}}</ion-item> -->
+	<ion-item><ion-label>생년월</ion-label>
+		<ion-select [(ngModel)]="birthYYYY" okText="확인" cancelText="취소" (ionChange)="updateBirthday()">
+			<ion-select-option *ngFor="let year of years" value="{{year}}">{{year}}</ion-select-option>
+		</ion-select>
+		<ion-select [(ngModel)]="birthMM" okText="확인" cancelText="취소" (ionChange)="updateBirthday()">
+			<ion-select-option *ngFor="let month of months" value="{{month}}">{{month}}</ion-select-option>
+		</ion-select>
+	</ion-item>
+	<ion-item><ion-label>등록일</ion-label>{{reg_date.substring(0,10)}}</ion-item>
 </ion-content>

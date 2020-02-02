@@ -110,7 +110,7 @@ export class CustomerDetailPage implements OnInit {
     setKakaoMessage(data){
       this.balance_date = data.balance_date;
       this.total_account = data.eval_account;
-      this.profits_rate = data.profits_rate * 100 + '%';
+      this.profits_rate = Math.round(data.profits_rate * 1000)/10 + '%';
       this.uri = this.domain+'my/'+this.login_code;
       console.log("first date ", this.uri);
       setTimeout(() => {

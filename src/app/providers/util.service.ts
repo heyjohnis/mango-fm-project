@@ -63,7 +63,7 @@ export class UtilService {
 		objectType: 'feed',
 		content: {
 			title: '고객님의 자산현황',
-			description: `기준일: ${this.setDataHyphen(date)} \n총자산: ${this.setComma(account)} / 수익률: ${rate}` ,
+			description: `기준일: ${this.setDateHyphen(date)} \n총자산: ${this.setComma(account)} / 수익률: ${rate}` ,
 			imageUrl:`${image_url}`,
 			link: {
 			mobileWebUrl:`${uri}`
@@ -86,7 +86,7 @@ export class UtilService {
 		return num.toString().replace(regexp, ',');
 	}
 	// YYYY-MM-DD 날짜 패턴
-	setDataHyphen(date)  {
+	setDateHyphen(date)  {
 		let year = date.substring(0, 4);
 		let month = date.substring(4,6);
 		let day = date.substring(6,8);

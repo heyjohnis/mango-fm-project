@@ -41,11 +41,9 @@ Kakao.init('0325775847f127216d65b8d03254c15e');
     HttpClientModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
-    // GoogleChartsModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
     })
-    // AngularFireAuthModule,
   ],
   declarations: [AppComponent,],
   providers: [InAppBrowser, SplashScreen, StatusBar, Api, UploadingService, CustomerService, MyfireService],

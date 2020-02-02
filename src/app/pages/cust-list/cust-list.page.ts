@@ -42,8 +42,8 @@ export class CustListPage implements OnInit {
 	this.modalCtrl.dismiss(data);
   }
 
-  selectFamilyKey(custNm, custId){
-	this.modalCtrl.dismiss({cust_nm: custNm, cust_id: custId})
+  selectFamilyKey(custNm, custId, account){
+	this.modalCtrl.dismiss({cust_nm: custNm, cust_id: custId, account_no: account})
   }
 //   inpSearchKey(){
 // 		console.log(this.queryText);

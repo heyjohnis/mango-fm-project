@@ -36,6 +36,7 @@
     "angular-google-charts": "^0.1.6",
     "angularfire2": "^5.2.3",
     "cordova-android": "^8.1.0",
+    "cordova-browser": "6.0.0",
     "cordova-ios": "^5.1.1",
     "cordova-plugin-device": "^2.0.3",
     "cordova-plugin-firebase-authentication": "^3.0.2",
@@ -86,7 +87,8 @@
   "cordova": {
     "platforms": [
       "ios",
-      "android"
+      "android",
+      "browser"
     ],
     "plugins": {
       "cordova-plugin-device": {},

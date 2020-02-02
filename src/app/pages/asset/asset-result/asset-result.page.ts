@@ -24,14 +24,30 @@ export class AssetResultPage implements OnInit {
 	public asset_cds: any;
 	public asset_chart_data: any = [["자산종류", "금액"]];
 
-	public ages: any = {upper: 60 , lower:35};
+	public retired_account: number = 0;
+
+	public retired_asset_cds: any = [
+		"01",	//: "개인형IRP",
+		"02",	//: "DC",
+		"03",	//: "DB",
+		//"04": "펀드",
+		"05"	//: "연금저축",
+		//"06": "해외비과세",
+		//"07": "현금성자산",
+		//"08": "채권",
+		//"09": "해외채권",
+		//"10": "주식",
+		//"11": "랩"
+	];
+
+	public ages: any = {upper:80, lower:60};
 	public birthYYYY: string = '';
 	public birthMM: string = '';
 
 	public birthday: string = '';
 	public current_age: number = 0;
 	public retired_age: number = 0;
-	public death_age: number = 0;
+	public pension_end_age: number = 0;
 	public period_pension: number = 20;
 
 	public save_period: number = 0;
@@ -46,6 +62,8 @@ export class AssetResultPage implements OnInit {
 	public remain_asset: number = 0;
 	public annuity_fv: number = 0;
 	public annuity_pv: number = 0;
+
+
 
 	@ViewChild('pieChart', {static: false}) pieChart: ElementRef;
 
@@ -87,7 +105,7 @@ export class AssetResultPage implements OnInit {
 	}
 
 	init(){
-
+		
 		let this_year = new Date().getFullYear();
 		let this_month = this.util.pad(new Date().getMonth() + 1, 2);
 		if(this.birthday != null && this.birthday.indexOf("/") > 0) {
@@ -96,15 +114,12 @@ export class AssetResultPage implements OnInit {
 		}
 
 		this.current_age = this_year - Number(this.birthYYYY) + (this_month > this.birthMM ? 0 : 1);
-		// console.log("calc age", this.current_age, this.birthYYYY, this_month);
 		if(Number(this.birthYYYY) == 0) this.current_age = 35;
-		this.retired_age = 60;
-
-		//this.current_age = this.ages.upper;
+		
 		this.retired_age = this.ages.lower;
+		this.pension_end_age = this.ages.upper;
 
 		if(this.current_age > this.retired_age) this.retired_age = this.current_age;
-		this.ages = {upper: this.retired_age, lower:this.current_age}
 		this.invest_before_rate = 5;
 		this.invest_after_rate = 4;
 		this.inflation_rate = 3;
@@ -114,10 +129,11 @@ export class AssetResultPage implements OnInit {
 	}
 
 	calcRetirePlan(){
-
-		
-
-		this.calcFV();
+		this.retired_age = this.ages.lower;
+		this.pension_end_age = this.ages.upper;
+		this.period_pension = this.ages.upper - this.ages.lower;		
+		console.log(this.period_pension);
+		this.calcFV();	
 		this.calcPMT();
 		this.calaPV();
 	}
@@ -128,7 +144,7 @@ export class AssetResultPage implements OnInit {
 				this.invest_before_rate/100, 
 				this.retired_age - this.current_age, 
 				this.pmt*12, 
-				this.eval_account
+				this.retired_account
 		));
 	}
 
@@ -172,7 +188,15 @@ export class AssetResultPage implements OnInit {
 		let assets_groupBy = _.groupBy(data, 'asset_cd');
 		console.log("assets_groupBy : ",assets_groupBy);
 		let assets_group = [];
+		
 		for(let key in assets_groupBy) {
+			
+			// 은퇴자산만 합산 
+			if(this.retired_asset_cds.includes(key)) 
+			assets_groupBy[key].forEach( asset => {
+				this.retired_account += asset.eval_account;
+			});
+			this.calcRetirePlan();
 			// 자산별 구성 
 			assets_group.push({asset_cd:key, assets: assets_groupBy[key]});
 			
@@ -211,28 +235,28 @@ export class AssetResultPage implements OnInit {
 
 	viewDetail(g_idx, asset_idx){
 		const el = document.querySelector<HTMLInputElement>("#more_info_"+g_idx+"_"+asset_idx);		
-		let has_add = el.classList.contains('more');
-		if(has_add) 
+		let has_class = el.classList.contains('more');
+		if(has_class) 
 			el.classList.remove('more');
 		else 
 			el.classList.add('more');
-		
-		//els.forEach((el) => {el.style.height = "0";});
-		// let target = document.querySelector<HTMLInputElement>("#more_info_"+g_idx+"_"+asset_idx+" .more_info");
-		// let height = target.style.height;
-		// console.log(height);
-		// if(height == '100%') target.style.height = '0';
-		// else target.style.height = '100%';
 	}
 
-	// setKakaoMessage(){
-	// 	let balance_date = this.balance_date;
-	// 	let eval_account = this.eval_account;
-	// 	let profits_rate = this.profits_rate * 100 + '%';
-	// 	let uri = this.domain+'my/'+this.login_code;
-	// 	console.log("first date ", this.uri);
-	// 	setTimeout(() => {
-	// 	  this.util.shareKakao(this.balance_date, this.total_account, this.profits_rate, this.uri, this.image_url);
-	// 	}, 1000);
-	//   }
+	openInputRates(){
+		const el = document.querySelector<HTMLInputElement>("#input_rate");	
+		let has_class = el.classList.contains('close');
+		if(has_class) 
+			el.classList.remove('close');
+		else 
+			el.classList.add('close');
+	}
+
+	openRetiredSimulation(){
+		const el = document.querySelector<HTMLInputElement>("#retired_simulation");	
+		let has_class = el.classList.contains('close');
+		if(has_class) 
+			el.classList.remove('close');
+		else 
+			el.classList.add('close');
+	}
 }

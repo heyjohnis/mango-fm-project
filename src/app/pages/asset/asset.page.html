@@ -4,15 +4,20 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>자산</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="showOption(is_option)" color="">편집</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div #pieChart style="height:280px;"> </div>
-
-    <ion-item *ngFor="let date of dates" (click)="gotoDetail(date.balance_date)">
-      <ion-label >{{date.balance_date | toDate}}</ion-label>
-      <div style="margin-right:1em;">{{date.balance_date_group}}</div>
-      <div>{{date.eval_account| number}}</div>
+  <section id="list_result" class="option_hidden">
+    <ion-item *ngFor="let date of dates; let i = index">
+      <ion-label (click)="gotoDetail(date.balance_date)">{{date.balance_date | toDate}}</ion-label>
+      <!-- <div style="margin-right:1em;">{{date.balance_date_group}}</div> -->
+      <div (click)="gotoDetail(date.balance_date)">{{date.eval_account| number}}</div>
+      <div class="option" (click)="delDate(date, i)"><ion-button color="danger">삭제</ion-button></div>
     </ion-item>
+  </section>
 </ion-content>

@@ -47,33 +47,23 @@ export class CustManagePage implements OnInit {
 		});
 	}
 
+	ionViewWillEnter(){
+		this.getCustomers(this.user_id);
+	}
+
+
 	getCustomers(user_id){
 		let formData = new FormData();
 		formData.append("fp_id", user_id);
 		return this.api.post('cust/getCustomerManageList', formData).subscribe( (resp) => {
 			this.customers = resp;
 
-			this.storage.set("customers", resp).then((data)=>{
-				console.log("Set Storage - customer : ", data)
-			});
+			// this.storage.set("customers", resp).then((data)=>{
+			// 	console.log("Set Storage - customer : ", data)
+			// });
 
 			this.cnt_customers = this.customers.length;
-			if(this.order_default != "" && this.order_default != null) this.segment = this.order_default;
-			this.selectSegment(this.segment);
 		});
-	}
-
-	selectSegment(order_default?){
-		if(order_default != "" && order_default != null) this.segment = order_default;
-		if( this.segment_before == this.segment ) {
-			let order_by = this.order_by[this.segment]
-			this.order_by[this.segment] = (order_by == 'asc') ? 'desc' : 'asc';
-		}
-		console.log("segment_before : ",this.segment_before);
-		console.log("segment : ",this.segment);
-		this.segment_before = this.segment
-		this.util.dataSort(this.customers, this.segment, this.order_by[this.segment]);
-		this.temp_customer = this.customers;
 	}
 
 	inpSearchKey(){

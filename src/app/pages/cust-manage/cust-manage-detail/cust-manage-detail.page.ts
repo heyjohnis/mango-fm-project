@@ -82,12 +82,37 @@ export class CustManageDetailPage implements OnInit {
 		await modal.present();
 		const { data } = await modal.onWillDismiss();
 		if (data) {
-			this.setFamilyKey(data.cust_id, data.cust_id, '');
+			this.setFamilyKey(data.cust_id, data.cust_id, data.account_no, '');
 		}
 	}
 
-	setFamilyKey(cust_id, family_key_no, family_key_yn){
-		
+	async setFamilyKey(cust_id, family_key_no, account_no,  family_key_yn){
+
+		const alert = await this.alertCtl.create({
+			header: '확인',
+			subHeader: '대표계좌설정',
+			message: account_no + '로 대표계좌로 설정하시겠습니까?',
+			buttons: [
+			{
+				text: '아니오',
+				role: 'cancel',
+				cssClass: 'secondary',
+				handler: (blah) => {
+				console.log('Confirm Cancel');
+				}
+			}, {
+				text: '네',
+				handler: () => {
+					this.processSetFamilyKey(cust_id, family_key_no, account_no, family_key_yn);
+				}
+			}
+			]
+		});
+		await alert.present();
+
+	}
+
+	processSetFamilyKey(cust_id, family_key_no, account_no, family_key_yn){
 		if(this.cust_id == cust_id) {
 			family_key_yn = 'y';
 		}
@@ -101,9 +126,8 @@ export class CustManageDetailPage implements OnInit {
 
 		return this.api.post('cust/updateFamilyKeyNo', formData).subscribe( (resp) => {
 			console.log(resp);
-
+			this.family_key_account_no = account_no;
 		});
-
 	}
 
 	// checkFamilayKey(data){
@@ -127,31 +151,4 @@ export class CustManageDetailPage implements OnInit {
 			console.log(resp);
 		});
 	}
-
-	// async confirmUpdateFamilyKey() {
-	// 	console.log("confirmUpdateFamilyKey");
-	// 	const alert = await this.alertCtl.create({
-	// 	  header: '확인',
-	// 	  subHeader: '고객정보',
-	// 	  message: '세대주로 변경하시겠습니까?',
-	// 	  buttons: [
-	// 		{
-	// 		  text: '아니오',
-	// 		  role: 'cancel',
-	// 		  cssClass: 'secondary',
-	// 		  handler: (blah) => {
-	// 			console.log('Confirm Cancel: blah');
-	// 		  }
-	// 		}, {
-	// 		  text: '네',
-	// 		  handler: () => {
-	// 			this.setFamilyKey(this.cust_id, this.cust_id, 'y', '');
-	// 		  }
-	// 		}
-	// 	  ]
-	// 	});
-	// 	await alert.present();
-
-	// }
-
 }
