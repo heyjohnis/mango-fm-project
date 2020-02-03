@@ -36,7 +36,7 @@ export class CustomerDetailPage implements OnInit {
         const data = google.visualization.arrayToDataTable(this.chart_data);
         const options: any = {
             title: '',
-            legend: {position: 'right', alignment: 'center'},
+            legend: {position: 'bottom', alignment: 'center'},
             pieSliceText: 'label',
         };
         const chart = new google.visualization.LineChart(this.pieChart.nativeElement);

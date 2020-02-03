@@ -47,6 +47,7 @@ export class AssetResultPage implements OnInit {
 	public birthday: string = '';
 	public current_age: number = 0;
 	public retired_age: number = 0;
+	public period_saving: number = 0.000000001;
 	public pension_end_age: number = 0;
 	public period_pension: number = 20;
 
@@ -119,7 +120,7 @@ export class AssetResultPage implements OnInit {
 		this.retired_age = this.ages.lower;
 		this.pension_end_age = this.ages.upper;
 
-		if(this.current_age > this.retired_age) this.retired_age = this.current_age;
+		if(this.current_age > this.retired_age) this.retired_age = this.current_age + 1;
 		this.invest_before_rate = 5;
 		this.invest_after_rate = 4;
 		this.inflation_rate = 3;
@@ -132,6 +133,8 @@ export class AssetResultPage implements OnInit {
 		this.retired_age = this.ages.lower;
 		this.pension_end_age = this.ages.upper;
 		this.period_pension = this.ages.upper - this.ages.lower;		
+		this.period_saving = this.retired_age - this.current_age;
+		if(this.period_saving == 0 ) this.period_saving = 0.0000000001;
 		console.log(this.period_pension);
 		this.calcFV();	
 		this.calcPMT();
@@ -142,7 +145,7 @@ export class AssetResultPage implements OnInit {
 		this.retired_fv = Math.round(
 			this.util.calcFv(
 				this.invest_before_rate/100, 
-				this.retired_age - this.current_age, 
+				this.period_saving, 
 				this.pmt*12, 
 				this.retired_account
 		));

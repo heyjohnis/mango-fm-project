@@ -63,11 +63,11 @@
 
 			<ion-list class="calculate" lines="none">
 				<ion-list-header >은퇴시점 자산 계산</ion-list-header>
-				<ion-item>
+				<ion-item class="input">
 					<ion-label>현재 은퇴자산</ion-label>
 					<ion-input type="number" pattern="\d*" [(ngModel)]="retired_account" (change)="calcRetirePlan()"></ion-input><div>원</div>
 				</ion-item>
-				<ion-item>
+				<ion-item class="input">
 					<ion-label>월적립액</ion-label>
 					<ion-input type="number" pattern="\d*" [(ngModel)]="pmt" (change)="calcRetirePlan()"></ion-input> <div>원</div>
 				</ion-item>
@@ -77,7 +77,7 @@
 				</ion-item>
 
 				<ion-list-header >은퇴연금 계산</ion-list-header>
-				<ion-item>
+				<ion-item class="input">
 					<ion-label>잔존자산</ion-label>
 					<ion-input type="number" pattern="\d*" [(ngModel)]="remain_asset" (change)="calcRetirePlan()"></ion-input><div>원</div>
 				</ion-item>

@@ -12,14 +12,24 @@
   <div #pieChart style="height:280px;"> </div>
 
   <ion-item *ngFor="let date of dates" (click) = "gotoAssetResult(cust_id, cust_nm, date.balance_date, date.eval_account )" >
-    <ion-label>{{date.balance_date | toDate}}</ion-label>
-    <ion-label clsss="account align-right">{{date.eval_account | number }}<span>원</span></ion-label>
-    <ion-label class="rate align-right">{{date.profits_rate | percent:'1.1'}}</ion-label>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4">
+          {{date.balance_date | toDate}}
+        </ion-col>
+        <ion-col size="5"class="align-right">
+          {{date.eval_account | number }}<span>원</span>
+        </ion-col>
+        <ion-col size="3" class="align-right">
+          {{date.profits_rate | percent:'1.1'}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-item>
     <!-- fab placed to the (vertical) center and end -->
     <ion-fab vertical="bottom" horizontal="end" slot="fixed" id="kakao" [hidden]="custLogin">
       <ion-fab-button id="kakao-link-btn" color="kakao">
-        <ion-icon name="share"></ion-icon>
+        <img src="./assets/img/kakaolink_btn_medium.png">
       </ion-fab-button>
     </ion-fab>
 </ion-content>

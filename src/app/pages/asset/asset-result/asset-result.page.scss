@@ -19,7 +19,7 @@
 .hidden_info{height:0; overflow: hidden;}
 .show_info{height:100%;}
 
-.retired_simulation{padding:1em;}
+.retired_simulation{padding:0.5em;}
 .retired_simulation ion-grid{padding:1em; background:var(--ion-color-light);}
 .retired_simulation ion-grid.close{height:0; overflow: hidden; padding:0; transition: height 0.2s ease-in-out;}
 
@@ -30,9 +30,12 @@
 .retired_age ion-col, .period_pension ion-col{display:flex; align-items:center;}
 .retired_age ion-col span, .period_pension ion-col span{width:100%; margin-top:0.1em; text-align: right;}
 
-.calculate{padding:1em;}
-.calculate ion-input{text-align: right;}
+.calculate{padding:0.5em; font-size:0.9em;}
+.calculate ion-input{text-align: right; font-size:0.9em;}
 .calculate ion-input input{text-align: right;}
+.calculate span{margin-left:1em;}
+.calculate .input ion-label{width:95px;}
+.calculate ion-input{margin-left: 1em; background: var(--ion-color-light); margin-right: 0.5em;}
 
 .input_rate{height:100%; overflow: hidden; transition: height 0.2s ease-in-out;}
 .input_rate.close{height:0; transition: height 0.2s ease-in-out;}

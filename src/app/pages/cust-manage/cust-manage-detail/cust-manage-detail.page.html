@@ -13,7 +13,7 @@
 	<ion-item (click)="selectCust()">
 		<ion-label>대표계좌지정</ion-label>
 		{{family_key_nm}} {{family_key_account_no}}</ion-item>
-	<ion-item routerLink="/my/{{login_code}}"><ion-label>로그인 코드</ion-label>{{login_code}}</ion-item>
+	<ion-item><ion-label>로그인 코드</ion-label>{{login_code}}</ion-item> <!--routerLink="/my/{{login_code}}" -->
 	<!-- <ion-item>{{email}}</ion-item> -->
 	<ion-item><ion-label>생년월</ion-label>
 		<ion-select [(ngModel)]="birthYYYY" okText="확인" cancelText="취소" (ionChange)="updateBirthday()">
