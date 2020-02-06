@@ -7,7 +7,7 @@ import { Api } from '../../providers/api/api';
 import { CustomerService } from '../../providers/customer.service';
 import { Storage } from '@ionic/storage';
 import { UtilService } from '../../providers/util.service';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { CustMergePage } from '../cust-merge/cust-merge.page';
 declare var asset_cds: any;
 
@@ -66,7 +66,8 @@ export class HomePage implements OnInit {
 		public util: UtilService,
 		public alertCtl: AlertController,
 		public modalController: ModalController,
-		public route: ActivatedRoute
+		public route: ActivatedRoute,
+		public toastController: ToastController
 		) { 
 			this.asset_cds = asset_cds;
 	}
@@ -237,7 +238,8 @@ export class HomePage implements OnInit {
 		if(result.checkCust.length > 0)
 			this.resultConfirm(header, message, result.checkCust);
 		else 
-			this.resultAlert(header, message);
+			//this.resultAlert(header, message);
+			this.resultToast(header, message);
 		this.uploadingFilesReset();
 	}
 
@@ -288,4 +290,35 @@ export class HomePage implements OnInit {
 		});
 		return await modal.present();
 	}	
+
+
+	async resultToast(header, massege) {
+		const toast = await this.toastController.create({
+		  header: header,
+		  message: massege,
+		  position: 'bottom',
+		  duration: 2000,
+		  showCloseButton: true,
+
+		//   buttons: [
+		// 	// {
+		// 	//   side: 'start',
+		// 	//   icon: 'star',
+		// 	//   text: 'Favorite',
+		// 	//   handler: () => {
+		// 	// 	console.log('Favorite clicked');
+		// 	//   }
+		// 	// },
+		// 	{
+		// 	  text: '확인',
+		// 	  role: 'cancel',
+		// 	  handler: () => {
+		// 		// console.log('Cancel clicked');
+		// 	  }
+		// 	}
+		//   ]
+		});
+		toast.present();
+	  }
+
 }

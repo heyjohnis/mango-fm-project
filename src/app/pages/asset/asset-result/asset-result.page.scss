@@ -40,5 +40,6 @@
 .input_rate{height:100%; overflow: hidden; transition: height 0.2s ease-in-out;}
 .input_rate.close{height:0; transition: height 0.2s ease-in-out;}
 
+.btn_rate{font-size:0.95em;}
 .btn_rate span{margin-left:1em; font-size:0.9em; color:var(--ion-color-light)}
 .input_rate ion-input{text-align: right;}

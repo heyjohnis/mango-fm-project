@@ -1,3 +1,7 @@
+<script src="./src/bootstrap-input-spinner.js"></script>
+<script>
+    $("input[type='number']").inputSpinner();
+</script> 
 <ion-header>
 	<ion-toolbar>
 		<ion-buttons slot="start">
@@ -20,13 +24,14 @@
 	</ion-item>	
 
 	<div #pieChart style="height:280px;"> </div>
-	
+
 	<section class="retired_simulation">
 		<ion-button expand="block" sharp="round" color="secondary" (click)="openRetiredSimulation()">은퇴 시뮬레이션</ion-button>
 		<ion-grid class="close" id="retired_simulation">
 			<ion-row class="ages_range">
 				<ion-col size="2" class="current_age">
 					<span>현재나이</span>
+
 					<ion-input type="number" pattern="\d*" [(ngModel)]="current_age" (change)="calcRetirePlan()"></ion-input>
 				</ion-col>
 				<ion-col size="8">
@@ -53,11 +58,11 @@
 				<ion-col size="1"></ion-col>
 			</ion-row>
 			<!-- 수익률 세팅 -->
-			<ion-button expand="block" color="medium" sharp="round" class="btn_rate" (click)="openInputRates()"> 수익률 설정 <span>은퇴전: {{invest_before_rate}}% / 은퇴후: {{invest_after_rate}}% / 물가: {{inflation_rate}}%</span></ion-button>
+			<ion-button expand="block" color="medium" sharp="round" class="btn_rate" (click)="openInputRates()"> 수익률 설정 <span>은퇴전: {{invest_before_rate / 100 | percent:'1.1'}} / 은퇴후: {{invest_after_rate / 100 | percent:'1.1'}} / 물가: {{inflation_rate / 100 | percent:'1.1'}}</span></ion-button>
 			<ion-list class="input_rate close" id="input_rate" lines="none">
-				<ion-item><ion-label>은퇴전 기대수익률</ion-label><ion-input type="number" pattern="/^\d*[.]\d{2}$/" [(ngModel)]="invest_before_rate" (change)="calcRetirePlan()"></ion-input>%</ion-item>
-				<ion-item><ion-label>은퇴후 기대수익률</ion-label><ion-input type="number" pattern="/^\d*[.]\d{2}$/" [(ngModel)]="invest_after_rate" (change)="calcRetirePlan()"></ion-input>%</ion-item>
-				<ion-item><ion-label>물가상승률</ion-label><ion-input type="number" pattern="/^\d*[.]\d{2}$/" [(ngModel)]="inflation_rate" (change)="calcRetirePlan()"></ion-input>%</ion-item>
+				<ion-item><ion-label>은퇴전 기대수익률</ion-label><ion-input type="number" step="0.1" pattern="/^\d*[.]\d{2}$/" [(ngModel)]="invest_before_rate" (change)="calcRetirePlan()"></ion-input>%</ion-item>
+				<ion-item><ion-label>은퇴후 기대수익률</ion-label><ion-input type="number" step="0.1" pattern="/^\d*[.]\d{2}$/" [(ngModel)]="invest_after_rate" (change)="calcRetirePlan()"></ion-input>%</ion-item>
+				<ion-item><ion-label>물가상승률</ion-label><ion-input type="number" step="0.1" pattern="/^\d*[.]\d{2}$/" [(ngModel)]="inflation_rate" (change)="calcRetirePlan()"></ion-input>%</ion-item>
 			</ion-list>
 			
 
