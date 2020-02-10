@@ -88,6 +88,7 @@ export class UserData {
 		this.regUser(formData);
 
 	  }).catch((err) => {
+		
 		console.log("sign-up-err: ",err); 
 	  });
 	});
