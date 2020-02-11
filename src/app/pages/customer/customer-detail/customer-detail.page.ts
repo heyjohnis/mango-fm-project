@@ -25,7 +25,8 @@ export class CustomerDetailPage implements OnInit {
     public chart_data: any;
     public birthday: string = '';
 
-    public domain: string = "http://jhouse.tjc.or.kr:8100/";
+    //public domain: string = "http://jhouse.tjc.or.kr:8100/";
+    public domain: string = "http://fadoctor.kr/";
     public uri: string = "";
     public image_url: string = "";
 
@@ -56,6 +57,12 @@ export class CustomerDetailPage implements OnInit {
         this.cust_id = this.route.snapshot.paramMap.get('cust_id');
         this.cust_nm = this.route.snapshot.paramMap.get('cust_nm');
         this.login_code = this.route.snapshot.paramMap.get('login_code');
+
+        if(this.login_code != '' && this.login_code != null ) {
+          this.storage.clear;
+          console.log("login code : ", this.login_code);
+        }
+
         this.getData();
         this.getUserData();
 
@@ -67,7 +74,7 @@ export class CustomerDetailPage implements OnInit {
             //this.checkCustLogin();
             this.cust_id = custId;
             this.cust_nm = '자산현황';
-            window.dispatchEvent(new CustomEvent('user:login_code'));
+            window.dispatchEvent(new CustomEvent('user:00'));
 
             this.getData();
           }

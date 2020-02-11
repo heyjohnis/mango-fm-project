@@ -7,7 +7,8 @@ import { AlertController } from '@ionic/angular';
 import { UserData } from '../../providers/user-data';
 
 import { UserOptions } from '../../interfaces/user-options';
-
+import { Api } from '../../providers/api/api';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'page-signup',
@@ -15,7 +16,7 @@ import { UserOptions } from '../../interfaces/user-options';
   styleUrls: ['./signup.scss'],
 })
 export class SignupPage implements OnInit {
-  signup: UserOptions = { uid: '', user_id: '', email: '', username: '', password: '',   file_nm: ''};
+  signup: UserOptions = { uid: '', user_id: '', email: '', username: '', password: '', user_type: '',  file_nm: ''};
   submitted = false;
   public cust_id;
 
@@ -23,7 +24,8 @@ export class SignupPage implements OnInit {
     public router: Router,
     public userData: UserData,
     public storage: Storage,
-    public alertCtl: AlertController
+    public alertCtl: AlertController,
+    public api: Api
   ) {}
 
   ngOnInit(){
@@ -34,33 +36,70 @@ export class SignupPage implements OnInit {
   }
 
   onSignup(form: NgForm) {
+
     this.submitted = true;
     console.log("cust_id", this.cust_id);
+
     if (form.valid) {
-      this.userData.signup(this.signup, this.cust_id).then((res) => {
-        this.userData.removeStorage();
-        this.userData.regUser(res);
-      }).catch(err => {
-        console.log('error: ', err);
-        this.signupErrorMessage(err.code);
+
+      this.storage.clear;
+
+      firebase.auth().createUserWithEmailAndPassword(this.signup.email, this.signup.password).then((res) => {
+        console.log("sign-up-res: ",res);
+
+        let user = firebase.auth().currentUser;
+        user.updateProfile({displayName: this.signup.username});
+
+        this.signup.uid = res.user.uid;
+        
+
+        let formData = new FormData();
+        formData.append("firebase_id", res.user.uid);
+        formData.append("email", this.signup.email);
+        formData.append("user_nm", this.signup.username);
+        formData.append("cust_id", this.cust_id);
+
+        this.api.post('user/regist', formData).subscribe( (user_id: any) => {
+          this.storage.set('user_id', user_id);
+          this.signup.user_id = user_id;
+          
+          this.userData.getUser(this.signup);
+        }, (err) => {
+          console.log("server reg user : ",err);
+        });
+        this.storage.set("hasLoggedIn", true);
+      }).catch((err) => {
+        console.log("sign-up-err: ",err); 
+        this.signupErrorMessage(err.code, err.message);
       });
     }
   }
 
-	signupErrorMessage(code): void {
+  
+
+	signupErrorMessage(code, message): void {
     let error_message = "";
     
     console.log("error code : ",code);
-		if(code == "auth/invalid-email") error_message = "이메일 형식이 맞지 않습니다.";
-		if(code == "auth/wrong-password") error_message = "패스워드 정확하지 않습니다.";
-    if(code == "auth/user-not-found") error_message = "가입되지 않은 이메일 계정입니다.";
-    if(code == "auth/weak-password") error_message = "패스워드를 최소 6자이상 입력하세요";
-    if(code == "auth/email-already-in-use") error_message = "이미 등록된 이메일입니다.";
-    
+		if(code == "auth/invalid-email") {
+      this.signup.email = "";
+      error_message = "이메일 형식이 맞지 않습니다.";
+    }
+		else if(code == "auth/wrong-password") {
+      this.signup.password = "";
+      error_message = "패스워드 정확하지 않습니다.";
+    } 
+    else if(code == "auth/weak-password") {
+      this.signup.password = "";
+      error_message = "패스워드를 최소 6자이상 입력하세요";
+    }
+    else if(code == "auth/email-already-in-use") {
+      this.signup.email = "";
+      error_message = "이미 등록된 이메일입니다.";
+    }
+    else error_message = message;
 		
 		this.errorAlert(error_message).then(()=>{			
-			this.signup.email = "";
-			this.signup.password = "";
 			this.router.navigated = false;
 			this.router.navigateByUrl('/signup');
 		});

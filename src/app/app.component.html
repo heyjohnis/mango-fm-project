@@ -9,10 +9,9 @@
       </ion-header>
 
       <ion-content>
-        <ion-list lines="none" *ngIf="loggedIn && !custLogin">
-          <!-- <ion-list-header>
-            Navigate
-          </ion-list-header> -->
+
+
+        <ion-list lines="none" *ngIf="auth.menu01">
           <ion-menu-toggle autoHide="false" *ngFor="let p of appPages; let i = index">
             <ion-item [routerLink]="p.url" routerLinkActive="active" routerDirection="root" detail="false">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
@@ -22,7 +21,8 @@
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
-        <ion-list lines="none" *ngIf="custLogin">
+
+        <ion-list lines="none" *ngIf="loggedIn && !auth.menu01">
           <ion-menu-toggle>
             <ion-item routerLink="/my-asset" routerDirection="root">
               <ion-icon slot="start" name="logo-usd"></ion-icon>
@@ -37,7 +37,7 @@
           </ion-menu-toggle>
         </ion-list>
 
-        <ion-list lines="none" *ngIf="loggedIn">
+        <ion-list lines="none" *ngIf="auth.menu02">
           <ion-menu-toggle autoHide="false">
             <ion-item routerLink="/cust-manage" routerDirection="root">
               <ion-icon slot="start" name="person"></ion-icon>
@@ -48,7 +48,8 @@
           </ion-menu-toggle>
         </ion-list>
 
-        <ion-list lines="none" *ngIf="loggedIn">
+
+        <ion-list lines="none" *ngIf="auth.menu03">
           <ion-menu-toggle autoHide="false">
             <ion-item routerLink="/account" routerDirection="root">
               <ion-icon slot="start" name="contact"></ion-icon>
@@ -59,7 +60,7 @@
           </ion-menu-toggle>
         </ion-list>
 
-        <ion-list lines="none" *ngIf="loggedIn">
+        <ion-list lines="none" >
           <ion-menu-toggle autoHide="false">
             <ion-item routerLink="/board" routerDirection="root">
               <ion-icon slot="start" name="clipboard"></ion-icon>
@@ -76,8 +77,10 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
+        </ion-list>
 
-          <ion-menu-toggle autoHide="false">
+        <ion-list lines="none">
+          <ion-menu-toggle autoHide="false" *ngIf="loggedIn">
             <ion-item button (click)="logout()">
               <ion-icon slot="start" name="log-out"></ion-icon>
               <ion-label>
@@ -85,10 +88,7 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-        </ion-list>
-
-        <ion-list lines="none" *ngIf="!loggedIn">
-          <ion-menu-toggle autoHide="false">
+          <ion-menu-toggle autoHide="false" *ngIf="!loggedIn">
             <ion-item routerLink="/login" routerDirection="root">
               <ion-icon slot="start" name="log-in"></ion-icon>
               <ion-label>
@@ -96,17 +96,7 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-
-          <ion-menu-toggle autoHide="false">
-            <ion-item routerLink="/support" routerDirection="root">
-              <ion-icon slot="start" name="help"></ion-icon>
-              <ion-label>
-                문의사항
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-
-          <ion-menu-toggle autoHide="false">
+          <ion-menu-toggle autoHide="false" *ngIf="!loggedIn">
             <ion-item routerLink="/signup" routerDirection="root">
               <ion-icon slot="start" name="person-add"></ion-icon>
               <ion-label>
@@ -118,7 +108,7 @@
 
       </ion-content>
 
-      <ion-footer>
+      <ion-footer *ngIf="auth.menu05">
           <ion-menu-toggle autoHide="false">
             <ion-item routerLink="/user-manage" routerDirection="root">
               <ion-icon slot="start" name="cog"></ion-icon>

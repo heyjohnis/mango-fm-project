@@ -5,5 +5,6 @@ export interface UserOptions {
   email: string;
   username: string;
   password: string;
+  user_type: string;
   file_nm: string;
 }

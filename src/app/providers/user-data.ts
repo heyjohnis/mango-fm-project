@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Events } from '@ionic/angular';
+import { Events, AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import * as firebase from 'firebase';
 // import * as admin from 'firebase-admin';
@@ -18,14 +18,15 @@ export class UserData {
   HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
   //API_SERVER = 'http://jhouse.tjc.or.kr:8080';
   API_SERVER = 'http://localhost:8080';
-  user: UserOptions = { uid: '', user_id: '', email: '', username: '', password: '', file_nm: ''};
+  user: UserOptions = { uid: '', user_id: '', email: '', username: '', password: '', user_type: '', file_nm: ''};
 
   constructor(
 	public http: HttpClient,
 	public events: Events,
 	public storage: Storage,
 	public api: Api,
-	public router: Router
+	public router: Router,
+	public alertCtl: AlertController
   ) { }
 
   hasFavorite(sessionName: string): boolean {
@@ -52,10 +53,12 @@ export class UserData {
 			formData.append("user_id", '');
 			return this.api.post('user/getUser', formData).subscribe( (res: any) => {
 				this.user.user_id = res.user_id;
+				this.user.user_type = res.user_type;
+
 				this.storage.set('user_data', res).then(()=>{
 					this.storage.set(this.HAS_LOGGED_IN, true).then(() => {
 						console.log("HAS_LOGGED_IN : ", this.HAS_LOGGED_IN);
-						return window.dispatchEvent(new CustomEvent('user:login'));
+						return window.dispatchEvent(new CustomEvent('user:'+this.user.user_type));
 					});
 				});
 			});
@@ -65,34 +68,34 @@ export class UserData {
 	
 
 
-  signup(value, cust_id) {
-	return new Promise<any>((resolve, reject) => {
-	  this.storage.set(this.HAS_LOGGED_IN, true);
-	  firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
-	  //.then(res => resolve(res), err => reject(err));
-	  .then((res) => {
+//   signup(value, cust_id) {
+// 	return new Promise<any>((resolve, reject) => {
+// 	  this.storage.set(this.HAS_LOGGED_IN, true);
+// 	  firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
+// 	  //.then(res => resolve(res), err => reject(err));
+// 	  .then((res) => {
 		
 		
-		console.log("sign-up-res: ",res);
+// 		console.log("sign-up-res: ",res);
 
-		let user = firebase.auth().currentUser;
-		user.updateProfile({displayName: value.username});
+// 		let user = firebase.auth().currentUser;
+// 		user.updateProfile({displayName: value.username});
 
-		let formData = new FormData();
-		formData.append("firebase_id", res.user.uid);
-		formData.append("email", res.user.email);
-		formData.append("user_nm", value.username);
-		formData.append("cust_id", cust_id);
+// 		let formData = new FormData();
+// 		formData.append("firebase_id", res.user.uid);
+// 		formData.append("email", res.user.email);
+// 		formData.append("user_nm", value.username);
+// 		formData.append("cust_id", cust_id);
 		
-		// Spring 회원가입
-		this.regUser(formData);
+// 		// Spring 회원가입
+// 		this.regUser(formData);
 
-	  }).catch((err) => {
+// 	  }).catch((err) => {
 		
-		console.log("sign-up-err: ",err); 
-	  });
-	});
-  }
+// 		console.log("sign-up-err: ",err); 
+// 	  });
+// 	});
+//   }
 
   regUser(user){
 	return this.api.post('user/regist', user).subscribe( (resp) => {
@@ -114,6 +117,7 @@ export class UserData {
 	return this.api.post('user/getUser', formData).subscribe( (res) => {
 	  console.log("server User Data : ", res);
 	  this.setUserData(res);
+	  return window.dispatchEvent(new CustomEvent('user:login'));
 	});
   }
 

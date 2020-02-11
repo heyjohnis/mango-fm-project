@@ -46,6 +46,14 @@ export class AppComponent implements OnInit {
   dark = false;
   custLogin = false;
 
+  auth: any = {
+    menu01: false,
+    menu02: false,
+    menu03: false,
+    menu04: false,
+    menu05: false,
+  }
+
 
   constructor(
     private menu: MenuController,
@@ -110,26 +118,73 @@ export class AppComponent implements OnInit {
 
 
   listenForLoginEvents() {
-    console.log("listenForLoginEvents"); 
-    window.addEventListener('user:login', () => {
-      console.log("listenForLoginEvents : login"); 
-      this.updateLoggedInStatus(true);
-    });
+    // console.log("listenForLoginEvents"); 
+    // window.addEventListener('user:login', () => {
+    //   console.log("listenForLoginEvents : login"); 
+    //   this.updateLoggedInStatus(true);
+    // });
 
-    window.addEventListener('user:signup', () => {
-      this.updateLoggedInStatus(true);
-    });
+    // window.addEventListener('user:signup', () => {
+    //   this.updateLoggedInStatus(true);
+    // });
 
     window.addEventListener('user:logout', () => {
       console.log("listenForLoginEvents : logout"); 
       this.updateLoggedInStatus(false);
+      this.auth.menu01 = false;
+      this.auth.menu02 = false;
+      this.auth.menu03 = false;
+      this.auth.menu04 = false;
+      this.auth.menu05 = false;
+    });
+    // login_code
+    window.addEventListener('user:00', () => {
+      console.log("listenForLoginEvents : 00"); 
+      this.setMenuAuth("00");
     });
 
-    window.addEventListener('user:login_code', () => {
-      console.log("listenForLoginEvents : login_code"); 
-      this.updateCustLoginStatus(true);
+    // 고객 01
+    window.addEventListener('user:01', () => {
+      console.log("listenForLoginEvents : user:01 고객"); 
+      this.setMenuAuth("01");
+    });    
+    // 고객 01
+    window.addEventListener('user:10', () => {
+      console.log("listenForLoginEvents : user:10 FA"); 
+      this.setMenuAuth("10");
+    });    
+    // 고객 01
+    window.addEventListener('user:99', () => {
+      console.log("listenForLoginEvents : user:99 관리자"); 
+      this.setMenuAuth("99");
     });    
 
+
+  }
+
+  setMenuAuth(code: string){
+    if(code != "") {
+      this.loggedIn = true;
+
+      if(code == "00") {  // 로그인 코드
+        //
+      }
+      else if(code == "01") { // 고객
+        //
+      }
+      else if (code == "10") {  // FA
+        this.auth.menu01 = true;
+        this.auth.menu02 = true;
+        this.auth.menu03 = true;
+      } else if(code == "99") { // 관리자
+        this.auth.menu01 = true;
+        this.auth.menu02 = true;
+        this.auth.menu03 = true;
+        this.auth.menu04 = true;
+        this.auth.menu05 = true;
+      }
+
+    }
   }
 
   logout() {
