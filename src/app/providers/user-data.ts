@@ -57,7 +57,6 @@ export class UserData {
 
 				this.storage.set('user_data', res).then(()=>{
 					this.storage.set(this.HAS_LOGGED_IN, true).then(() => {
-						console.log("HAS_LOGGED_IN : ", this.HAS_LOGGED_IN);
 						return window.dispatchEvent(new CustomEvent('user:'+this.user.user_type));
 					});
 				});
@@ -117,6 +116,7 @@ export class UserData {
 	return this.api.post('user/getUser', formData).subscribe( (res) => {
 	  console.log("server User Data : ", res);
 	  this.setUserData(res);
+
 	  return window.dispatchEvent(new CustomEvent('user:login'));
 	});
   }
@@ -166,13 +166,16 @@ export class UserData {
 	});
   }
 
-  isLoggedIn(): Promise<string> {
-	return this.storage.get('user_data').then((data) => {
-	//return this.storage.get(this.HAS_LOGGED_IN).then((value) => {
-	  //console.log("isLoogedIn : " , value);
-	  return data.user_type;
-	  //return value === true;
+  isLoggedIn(): Promise<boolean> {
+	return this.storage.get(this.HAS_LOGGED_IN).then((value) => {
+	  return value === true;
 	});
+  }
+
+  getAuthUser(): Promise<string>{
+	  return this.storage.get("user_data").then((data)=>{
+		return data.user_type;		
+	  });
   }
 
   setUserId(userId: any): Promise<any> {
@@ -181,7 +184,6 @@ export class UserData {
 
   async getUserId(): Promise<string> {
 	return await this.storage.get('user_id').then((value) => {
-	  // console.log(value);
 	  return value;
 	});
   }

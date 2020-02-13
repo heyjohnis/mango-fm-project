@@ -51,7 +51,6 @@ export class SignupPage implements OnInit {
         user.updateProfile({displayName: this.signup.username});
 
         this.signup.uid = res.user.uid;
-        
 
         let formData = new FormData();
         formData.append("firebase_id", res.user.uid);
@@ -61,13 +60,13 @@ export class SignupPage implements OnInit {
 
         this.api.post('user/regist', formData).subscribe( (user_id: any) => {
           this.storage.set('user_id', user_id);
+          this.storage.set('hasLoggedIn', true);
           this.signup.user_id = user_id;
-          
           this.userData.getUser(this.signup);
+          window.dispatchEvent(new CustomEvent('user:01'));
         }, (err) => {
           console.log("server reg user : ",err);
         });
-        this.storage.set("hasLoggedIn", true);
       }).catch((err) => {
         console.log("sign-up-err: ",err); 
         this.signupErrorMessage(err.code, err.message);

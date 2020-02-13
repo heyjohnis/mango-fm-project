@@ -72,6 +72,7 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     this.checkLoginStatus();
     this.listenForLoginEvents();
+    this.checkAuthUser();
 
     this.swUpdate.available.subscribe(async res => {
       const toast = await this.toastCtrl.create({
@@ -98,10 +99,14 @@ export class AppComponent implements OnInit {
   }
 
   checkLoginStatus() {
-    return this.userData.isLoggedIn().then(type => {
-      console.log("loggedIn check : " , type);
-      //return this.updateLoggedInStatus(loggedIn);
-      this.setMenuAuth(type);
+    return this.userData.isLoggedIn().then(loggedIn => {
+      return this.updateLoggedInStatus(loggedIn);
+    });
+  }
+
+  checkAuthUser(){
+    return this.userData.getAuthUser().then(user_type =>{
+      this.setMenuAuth(user_type);
     });
   }
 
@@ -111,23 +116,14 @@ export class AppComponent implements OnInit {
     }, 300);
   }
 
-  updateCustLoginStatus(loggedIn: boolean) {
-    setTimeout(() => {
-      this.custLogin = loggedIn;
-    }, 300);
-  }
-
-
   listenForLoginEvents() {
-    // console.log("listenForLoginEvents"); 
-    // window.addEventListener('user:login', () => {
-    //   console.log("listenForLoginEvents : login"); 
-    //   this.updateLoggedInStatus(true);
-    // });
+    window.addEventListener('user:login', () => {
+      this.updateLoggedInStatus(true);
+    });
 
-    // window.addEventListener('user:signup', () => {
-    //   this.updateLoggedInStatus(true);
-    // });
+    window.addEventListener('user:signup', () => {
+      this.updateLoggedInStatus(true);
+    });
 
     window.addEventListener('user:logout', () => {
       console.log("listenForLoginEvents : logout"); 
@@ -168,10 +164,10 @@ export class AppComponent implements OnInit {
       this.loggedIn = true;
 
       if(code == "00") {  // 로그인 코드
-        //
+        this.auth.menu01 = false;
       }
       else if(code == "01") { // 고객
-        //
+        this.auth.menu01 = false;
       }
       else if (code == "10") {  // FA
         this.auth.menu01 = true;
@@ -184,7 +180,7 @@ export class AppComponent implements OnInit {
         this.auth.menu04 = true;
         this.auth.menu05 = true;
       }
-
+      console.log("setMenuAuth : ", code);
     }
   }
 
