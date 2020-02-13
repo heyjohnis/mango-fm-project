@@ -98,9 +98,10 @@ export class AppComponent implements OnInit {
   }
 
   checkLoginStatus() {
-    return this.userData.isLoggedIn().then(loggedIn => {
-      console.log("loggedIn check");
-      return this.updateLoggedInStatus(loggedIn);
+    return this.userData.isLoggedIn().then(type => {
+      console.log("loggedIn check : " , type);
+      //return this.updateLoggedInStatus(loggedIn);
+      this.setMenuAuth(type);
     });
   }
 

@@ -166,10 +166,12 @@ export class UserData {
 	});
   }
 
-  isLoggedIn(): Promise<boolean> {
-	return this.storage.get(this.HAS_LOGGED_IN).then((value) => {
-	  console.log("isLoogedIn : " , value);
-	  return value === true;
+  isLoggedIn(): Promise<string> {
+	return this.storage.get('user_data').then((data) => {
+	//return this.storage.get(this.HAS_LOGGED_IN).then((value) => {
+	  //console.log("isLoogedIn : " , value);
+	  return data.user_type;
+	  //return value === true;
 	});
   }
 
