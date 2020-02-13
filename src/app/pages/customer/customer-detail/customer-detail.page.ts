@@ -6,6 +6,7 @@ import { UtilService } from '../../../providers/util.service';
 import * as _ from 'lodash';
 import { storage } from 'firebase';
 import { timeout } from 'rxjs/operators';
+import { UserData } from '../../../providers/user-data';
 
 @Component({
     selector: 'customer-detail',
@@ -49,7 +50,8 @@ export class CustomerDetailPage implements OnInit {
         private api: Api,
         private router: Router,
         public util: UtilService,
-        private storage: Storage
+        private storage: Storage,
+        private userData: UserData
     ) {
     }
 
@@ -65,6 +67,7 @@ export class CustomerDetailPage implements OnInit {
 
         this.getData();
         this.getUserData();
+        this.checkAuthUser();
 
         this.storage.get('cust_id').then((custId) =>{
           if(custId != null) {
@@ -95,9 +98,11 @@ export class CustomerDetailPage implements OnInit {
         let formData = new FormData();
         formData.append("cust_id", this.cust_id);
         return this.api.post('fund/dates', formData).subscribe( (resp: any) => {
+          console.log("오류 ", resp);
             this.dates = resp.dates;
             this.login_code = resp.login_code;
-            this.setKakaoMessage(this.dates[0]);
+            if(this.dates.length != 0)
+              this.setKakaoMessage(this.dates[0]);
             this.chart_data = this.setChartData(this.util.setMonthlyData(this.dates, 4));
             /* 차트 로딩 */
             google.charts.load('current', { 'packages': ['corechart'] });
@@ -110,7 +115,16 @@ export class CustomerDetailPage implements OnInit {
       formData.append("cust_id", this.cust_id);
       return this.api.post('cust/getUserData', formData).subscribe( (resp: any) => {
         console.log("Get User Data : ",resp);
-        this.birthday = resp.birthday;
+        if(resp != null) this.birthday = resp.birthday;
+      });
+    }
+
+    checkAuthUser(){
+      return this.userData.getAuthUser().then(user_type =>{
+        if(user_type == '10' || user_type == '99') 
+          document.querySelector<HTMLInputElement>('#kakao').style.display = 'block';
+        else document.querySelector<HTMLInputElement>('#kakao').style.display = 'nonek';
+
       });
     }
 

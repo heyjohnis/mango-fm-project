@@ -54,10 +54,10 @@ export class UserData {
 			return this.api.post('user/getUser', formData).subscribe( (res: any) => {
 				this.user.user_id = res.user_id;
 				this.user.user_type = res.user_type;
-
+				window.dispatchEvent(new CustomEvent('user:'+this.user.user_type));
 				this.storage.set('user_data', res).then(()=>{
 					this.storage.set(this.HAS_LOGGED_IN, true).then(() => {
-						return window.dispatchEvent(new CustomEvent('user:'+this.user.user_type));
+						return window.dispatchEvent(new CustomEvent('user:login'));
 					});
 				});
 			});
@@ -174,7 +174,8 @@ export class UserData {
 
   getAuthUser(): Promise<string>{
 	  return this.storage.get("user_data").then((data)=>{
-		return data.user_type;		
+		let user_type = data != null ? data.user_type : '';
+		return user_type;		
 	  });
   }
 

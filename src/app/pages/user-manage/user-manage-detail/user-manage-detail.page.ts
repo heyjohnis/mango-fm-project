@@ -87,6 +87,7 @@ export class UserManageDetailPage implements OnInit {
   	}
 
 	userChange(){
+		this.storage.clear;
 		let formData = new FormData();
 		formData.append("user_id", this.user_id);
 		formData.append("firebase_id", "");
