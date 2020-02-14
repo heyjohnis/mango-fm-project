@@ -21,6 +21,7 @@ export class CustManageDetailPage implements OnInit {
 	private birthMM: string;
 	private years: any = [];
 	private months: any = [];
+	private user_id: string;
 
 	private family_key_yn: string;
 	private family_key_no: string;
@@ -54,6 +55,7 @@ export class CustManageDetailPage implements OnInit {
 		this.family_key_nm = this.route.snapshot.paramMap.get('family_key_nm');
 		this.family_key_yn = this.route.snapshot.paramMap.get('family_key_yn');
 		this.family_key_account_no = this.route.snapshot.paramMap.get('family_key_account_no');
+		this.user_id = this.route.snapshot.paramMap.get('user_id');
 		this.fp_id = this.route.snapshot.paramMap.get('fp_id');
 		this.login_code = this.route.snapshot.paramMap.get('login_code');
 		this.family_cd = this.route.snapshot.paramMap.get('family_cd');

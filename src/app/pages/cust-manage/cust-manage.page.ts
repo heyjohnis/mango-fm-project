@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { Api } from '../../providers/api/api';
 import { UserData } from '../../providers/user-data';
 import { UtilService } from '../../providers/util.service';
+import { AlertController } from '@ionic/angular';
 declare var family_cds: any;
 
 @Component({
@@ -17,12 +18,10 @@ export class CustManagePage implements OnInit {
 	public temp_customer: any;
 	public queryText: string;
 	public user_id;
-	public order_default: string = 'cust_nm';
 	public segment: string = 'cust_nm';
-	private segment_before: string = '';
+	private cnt_total_cust = 0;
 	private cnt_customers = 0;
-	private order_by:any = {"cust_nm": "asc", "reg_date": "desc", "eval_account": "desc", "profits_rate": "desc"};
-	private family_cds;
+
 	constructor( 
 		private storage: Storage,
 		private router: Router,
@@ -30,13 +29,12 @@ export class CustManagePage implements OnInit {
 		private api: Api,
 		private userData: UserData,
 		private util: UtilService,
+		private alertCtl: AlertController
 	) { 
-		this.family_cds = family_cds;
+		//this.family_cds = family_cds;
 	}
 	
 	ngOnInit() {
-
-		this.order_default = this.route.snapshot.paramMap.get('order_by');
 
 		this.storage.get('user_data').then((data) => {
 				console.log("user_id: ", data.user_id);
@@ -48,7 +46,7 @@ export class CustManagePage implements OnInit {
 	}
 
 	ionViewWillEnter(){
-		this.getCustomers(this.user_id);
+	//	this.getCustomers(this.user_id);
 	}
 
 
@@ -56,14 +54,30 @@ export class CustManagePage implements OnInit {
 		let formData = new FormData();
 		formData.append("fp_id", user_id);
 		return this.api.post('cust/getCustomerManageList', formData).subscribe( (resp) => {
-			this.customers = resp;
-			this.temp_customer = resp;
-			this.storage.set("customers", resp).then((data)=>{
+			let custs = this.resetCustData(resp);
+			this.customers = custs;
+			this.temp_customer = custs;
+			this.storage.set("customers", custs).then((data)=>{
 				console.log("Set Storage - customer : ", data)
 			});
 
-			this.cnt_customers = this.customers.length;
+			this.cnt_total_cust = this.customers.length;
 		});
+	}
+
+	resetCustData(data: any): any {
+		let cust_nm = "";
+		let cust = [];
+		data.forEach(el => {
+			if(el.cust_nm == cust_nm) el.overlap = true;
+			else {
+				el.overlap = false;
+				this.cnt_customers ++;
+			}
+			cust_nm = el.cust_nm;
+			cust.push(el);
+		});
+		return cust;
 	}
 
 	inpSearchKey(){
@@ -88,6 +102,40 @@ export class CustManagePage implements OnInit {
 		formData.append("cust_id", "");
 		return this.api.post('cust/genLoginKey', formData).subscribe( (resp) => {
 			console.log(resp);
+		});
+	}
+
+
+	async mergeCust(cust_id, cust_nm) {
+		const alert = await this.alertCtl.create({
+		  header: '중복고객 합치기',
+		  message: '중복된 '+cust_nm + ' 고객님을 합치겠습니까?',
+		  buttons: [
+			{
+			  text: '아니오',
+			  role: 'cancel',
+			  cssClass: 'secondary',
+			  handler: (blah) => {
+				console.log('Confirm Cancel: blah');
+			  }
+			}, {
+			  text: '네',
+			  handler: () => {
+				this.processCustMerge(cust_id);
+			  }
+			}
+		  ]
+		});
+	
+		await alert.present();
+	}
+
+	processCustMerge(cust_id){
+		let formData = new FormData();
+		formData.append("cust_id", cust_id);
+		return this.api.post('cust/mergeCust', formData).subscribe( (resp) => {
+			console.log("update merge customer : ", cust_id);
+			document.getElementById('cust_'+cust_id).classList.add('sub');
 		});
 	}
 

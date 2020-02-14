@@ -123,7 +123,7 @@ export class AssetResultPage implements OnInit {
 		if(this.current_age > this.retired_age) this.retired_age = this.current_age + 1;
 		this.invest_before_rate = 5;
 		this.invest_after_rate = 4;
-		this.inflation_rate = 3;
+		this.inflation_rate = 2;
 
 		this.calcRetirePlan();
 
@@ -197,7 +197,7 @@ export class AssetResultPage implements OnInit {
 			// 은퇴자산만 합산 
 			if(this.retired_asset_cds.includes(key)) 
 			assets_groupBy[key].forEach( asset => {
-				this.retired_account += asset.eval_account;
+				this.retired_account += Math.round(asset.eval_account / 10000);
 			});
 			this.calcRetirePlan();
 			// 자산별 구성 

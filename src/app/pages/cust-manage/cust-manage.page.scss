@@ -1,8 +1,15 @@
-.list-name .cust_nm{color:#000; font-size:1em;}
+.list-name .cust_nm{color:var(--ion-color-dark); font-size:1em;}
 .list-name .account_no{margin-left:0.5em;}
 .list-name .family_key{margin-left:0.5em; padding:0.15em 0.3em; font-size:0.7em; background-color:var(--ion-color-light); border-radius: 0.3em;}
+.list-name .user_id{margin-left:0.5em; padding:0.15em 0.3em; font-size:0.7em; background-color:var(--ion-color-danger); border-radius: 0.3em; color:var(--ion-color-light);}
 .list-name .family_key_y{background-color:var(--ion-color-tertiary); color:#fff;}
 
 
-.cust_error{background-color:#ff0000;}
-.cust_error span{color:#ff0000 !important;}
+.cust_error{background-color:var(--ion-color-danger);}
+.cust_error span{color:var(--ion-color-danger) !important;}
+
+.cust_list .sub ion-label{margin-left:1em;}
+.cust_list .sub ion-label .cust_nm{color:var(--ion-color-medium)}
+.cust_list .btn_merge{display:none; margin-left:0.5em;}
+.cust_list .overlap .btn_merge{display: block;}
+.cust_list .overlap.sub .btn_merge{display: none;}

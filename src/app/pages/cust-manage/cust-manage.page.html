@@ -1,32 +1,52 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>고객관리</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="genLoginKey()" color="">임시번호생성</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-  <ion-toolbar>
-    <ion-searchbar [(ngModel)]="queryText" (ionChange)="inpSearchKey()" placeholder="검색할 이름을 입력하세요"></ion-searchbar>
-  </ion-toolbar>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button></ion-menu-button>
+		</ion-buttons>
+		<ion-title>고객관리</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="genLoginKey()" color="">임시번호생성</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+	<ion-toolbar>
+		<ion-searchbar [(ngModel)]="queryText" (ionChange)="inpSearchKey()" placeholder="검색할 이름을 입력하세요"></ion-searchbar>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-item><ion-label>전체고객</ion-label>{{cnt_customers}}</ion-item>
-  <ion-list>
-    <!-- <ion-list-header>
-      <ion-label>최신등록고객</ion-label>
-    </ion-list-header> -->
-    <ion-item *ngFor="let customer of customers" (click)="gotoDetail(customer)" class="{{customer.family_key_yn2 == 'y' ? '':'cust_error'}}">
-    <ion-label class="list-name">
-      <span class="cust_nm">{{customer.cust_nm}}</span>
-      <span class="account_no">{{customer.account_no}}</span>
-      <span class="family_key family_key_{{customer.family_key_yn}}">{{customer.family_key_yn == 'y' ? '대표계좌' : customer.family_key_nm + ' ' + customer.family_key_account_no}} </span>
-    </ion-label>
-    <div class="list-family_cd"></div>
-    <div class="list-date">{{customer.reg_date.substring(0,10)}}</div>
-	</ion-item>
-  </ion-list>
+	<ion-item><ion-label>전체고객</ion-label>{{cnt_customers}} / {{cnt_total_cust}}</ion-item>
+	<ion-list class="cust_list">
+		<ion-item *ngFor="let customer of customers;"
+		class="{{customer.family_key_yn2 == 'y' ? '':'cust_error'}}
+			{{customer.family_key_yn == 'y' ? '' : 'sub'}}
+			{{customer.overlap == true ? 'overlap' : ''}}"
+		color="{{customer.overlap == true ? 'light' : ''}}" 
+		id="cust_{{customer.cust_id}}">
+			<ion-label class="list-name" (click)="gotoDetail(customer)" >
+				<span class="cust_nm">{{customer.cust_nm}}</span>
+				<span class="account_no">{{customer.account_no}}</span>
+				<span class="family_key family_key_{{customer.family_key_yn}}">
+					{{customer.family_key_yn == 'y' ? '대표계좌' : customer.family_key_nm + ' ' + customer.family_key_account_no}} 
+				</span>
+				<span class="user_id" *ngIf="customer.user_id != null">{{customer.user_id}}</span>
+			</ion-label>
+			<div class="list-family_cd"></div>
+			<div class="list-date" (click)="gotoDetail(customer)">{{customer.reg_date.substring(0,10)}}</div>
+			<div class="btn_merge">
+				<ion-button size="small" color="medium" (click)="mergeCust(customer.cust_id, customer.cust_nm)">합치기</ion-button>
+			</div>
+		</ion-item>
+	</ion-list>
+	<ion-list *ngIf="!customers" >
+		<ion-item *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
+			<ion-row style="width:100%">
+				<ion-col><ion-label><ion-skeleton-text animated style="width: 50%"></ion-skeleton-text></ion-label></ion-col>
+				<ion-col><ion-skeleton-text animated></ion-skeleton-text></ion-col>
+				<ion-col><ion-skeleton-text animated></ion-skeleton-text></ion-col>
+			</ion-row>
+		</ion-item>
+
+	</ion-list>
+
+	
 </ion-content>

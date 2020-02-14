@@ -70,29 +70,29 @@
 				<ion-list-header >은퇴시점 자산 계산</ion-list-header>
 				<ion-item class="input">
 					<ion-label>현재 은퇴자산</ion-label>
-					<ion-input type="number" pattern="\d*" [(ngModel)]="retired_account" (change)="calcRetirePlan()"></ion-input><div>원</div>
+					<ion-input type="number" pattern="\d*" [(ngModel)]="retired_account" (change)="calcRetirePlan()"></ion-input><div>만원</div>
 				</ion-item>
 				<ion-item class="input">
 					<ion-label>월적립액</ion-label>
-					<ion-input type="number" pattern="\d*" [(ngModel)]="pmt" (change)="calcRetirePlan()"></ion-input> <div>원</div>
+					<ion-input type="number" pattern="\d*" [(ngModel)]="pmt" (change)="calcRetirePlan()"></ion-input> <div>만원</div>
 				</ion-item>
 				<ion-item>
 					<ion-label>은퇴시점적립액</ion-label>
-					<div class="text_account">{{retired_fv | number}}<span>원</span></div>
+					<div class="text_account">{{retired_fv | number}}<span>만원</span></div>
 				</ion-item>
 
 				<ion-list-header >은퇴연금 계산</ion-list-header>
 				<ion-item class="input">
 					<ion-label>잔존자산</ion-label>
-					<ion-input type="number" pattern="\d*" [(ngModel)]="remain_asset" (change)="calcRetirePlan()"></ion-input><div>원</div>
+					<ion-input type="number" pattern="\d*" [(ngModel)]="remain_asset" (change)="calcRetirePlan()"></ion-input><div>만원</div>
 				</ion-item>
 				<ion-item>
 					<ion-label>은퇴시점 연금액</ion-label>
-					<div class="text_account">{{annuity_fv | number}}<span>원</span></div>
+					<div class="text_account">{{annuity_fv | number}}<span>만원</span></div>
 				</ion-item>
 				<ion-item>
 					<ion-label>현재가치 연금액</ion-label>
-					<div class="text_account">{{annuity_pv | number}}<span>원</span></div>
+					<div class="text_account">{{annuity_pv | number}}<span>만원</span></div>
 				</ion-item>
 			</ion-list>
 
