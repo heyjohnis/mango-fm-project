@@ -7,7 +7,7 @@ import { Api } from '../../providers/api/api';
 import { CustomerService } from '../../providers/customer.service';
 import { Storage } from '@ionic/storage';
 import { UtilService } from '../../providers/util.service';
-import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController, LoadingController } from '@ionic/angular';
 import { CustMergePage } from '../cust-merge/cust-merge.page';
 declare var asset_cds: any;
 
@@ -37,7 +37,10 @@ export class HomePage implements OnInit {
 	public asset_cds: any;
 	public total_account = 0;
 
-	
+	public isLoading = false;
+	public fileCount = 0;
+	public resultCount = 0;
+
 	@ViewChild('pieChart', {static: false}) pieChart: ElementRef;
 
 	public drawChart = () => {
@@ -67,7 +70,8 @@ export class HomePage implements OnInit {
 		public alertCtl: AlertController,
 		public modalController: ModalController,
 		public route: ActivatedRoute,
-		public toastController: ToastController
+		public toastController: ToastController,
+		public loadingController: LoadingController
 		) { 
 			this.asset_cds = asset_cds;
 	}
@@ -198,24 +202,32 @@ export class HomePage implements OnInit {
 	uploadingFiles() {
 
 		let files = this.getFiles();
-
+		this.fileCount = files.length;
+		if(this.fileCount > 0) 
+			this.processLoading();
+		else alert("파일을 첨부하세요."); 
+		
 		files.forEach(async (file) => {
 			let formData = new FormData();
 			console.log("upload fp_id : ", this.user_id);
 			formData.append('file', file.rawFile, file.name);
 			formData.append('fp_id', this.user_id);
 
-
 			return this.api.post('upload/upload-xls', formData).subscribe((resp) => {
 				console.log('데이터 처리 완료');
 				console.log(resp);
+				this.resultCount ++;
+				if(this.fileCount == this.resultCount) {
+					this.processDismiss();
+					this.resultCount = 0
+				}
 				this.resultFileUpload(resp);
 			}, (err) => {
 				console.log('파일 업로드 실패');
 				console.log(err);
+				this.processDismiss();
 			});
 		});
-
 	}
 
 	uploadingFilesReset() {
@@ -320,5 +332,25 @@ export class HomePage implements OnInit {
 		});
 		toast.present();
 	  }
+
+	  async processLoading() {
+		this.isLoading = true
+		return await this.loadingController.create({
+		  message: '처리 중 입니다...',
+		  duration: 20000
+		}).then( a => {
+			a.present().then(()=>{
+				if(!this.isLoading){
+					a.dismiss().then(()=>console.log("Finish!"));
+				}
+			});
+		});
+	  }
+
+	  async processDismiss() {
+		this.isLoading = false;
+		return await this.loadingController.dismiss().then(() => console.log("loading dismiss"));
+	  }
+	  
 
 }

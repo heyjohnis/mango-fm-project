@@ -46,6 +46,7 @@ export class AppComponent implements OnInit {
   dark = false;
   custLogin = false;
 
+
   auth: any = {
     menu01: false,
     menu02: false,
@@ -73,6 +74,7 @@ export class AppComponent implements OnInit {
     this.checkLoginStatus();
     this.listenForLoginEvents();
     this.checkAuthUser();
+
 
     this.swUpdate.available.subscribe(async res => {
       const toast = await this.toastCtrl.create({
