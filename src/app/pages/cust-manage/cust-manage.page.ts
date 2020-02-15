@@ -68,12 +68,11 @@ export class CustManagePage implements OnInit {
 	resetCustData(data: any): any {
 		let cust_nm = "";
 		let cust = [];
+		this.cnt_customers = 0;
 		data.forEach(el => {
 			if(el.cust_nm == cust_nm) el.overlap = true;
-			else {
-				el.overlap = false;
-				this.cnt_customers ++;
-			}
+			else el.overlap = false;
+			if(el.family_key_no == el.cust_id) this.cnt_customers ++;
 			cust_nm = el.cust_nm;
 			cust.push(el);
 		});

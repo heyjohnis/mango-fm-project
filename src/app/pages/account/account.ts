@@ -6,7 +6,7 @@ import { Storage } from '@ionic/storage';
 import { UserData } from '../../providers/user-data';
 import { Api } from '../../providers/api/api';
 import { UserOptions } from '../../interfaces/user-options';
-
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'page-account',
@@ -18,6 +18,7 @@ export class AccountPage implements AfterViewInit {
   email: string;
   user_id: string;
   url: string =  "https://www.gravatar.com/avatar?d=mm&s=140";
+  firebase_id: string; 
   public birthYYYY: string;
   public birthMM: string;
 
@@ -40,25 +41,24 @@ export class AccountPage implements AfterViewInit {
   // Present an alert with the current username populated
   // clicking OK will update the username and display it
   // clicking Cancel will close the alert and do nothing
-  async changeUsername() {
+  async changePassword() {
     const alert = await this.alertCtrl.create({
-      header: 'Change Username',
+      header: '패스워드 변경',
       buttons: [
         'Cancel',
         {
           text: 'Ok',
           handler: (data: any) => {
-            this.userData.setUsername(data.username);
-            this.getUsername();
+            this.setPassword(data.password);
           }
         }
       ],
       inputs: [
         {
-          type: 'text',
-          name: 'username',
-          value: this.username,
-          placeholder: 'username'
+          type: 'password',
+          name: 'password',
+          value: '',
+          placeholder: '변경할 패스워드를 입력하세요'
         }
       ]
     });
@@ -71,7 +71,9 @@ export class AccountPage implements AfterViewInit {
       this.username = data.user_nm;
       this.user_id = data.user_id;
       this.email = data.email;
-      this.url = this.api.url+"/profile/"+data.file_nm;
+      this.firebase_id = data.firebase_id;
+      if(data.file_name != null && data.file_nm != '')
+        this.url = this.api.url+"/profile/"+data.file_nm;
     });
   }
 
@@ -79,10 +81,6 @@ export class AccountPage implements AfterViewInit {
     this.userData.getUsername().then((username) => {
       this.username = username;
     });
-  }
-
-  changePassword() {
-    console.log('Clicked to change password');
   }
 
   logout() {
@@ -115,8 +113,15 @@ export class AccountPage implements AfterViewInit {
 				console.log('파일 업로드 실패');
 				console.log(err);
 			});
+  }
 
-
+  setPassword(password){
+    let user = firebase.auth().currentUser;
+    user.updatePassword(password).then(()=>{
+      alert("패스워드가 변경되었습니다.");
+    }).catch((err)=>{
+      alert(err.message);
+    });
   }
 
 }

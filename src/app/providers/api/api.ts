@@ -11,8 +11,8 @@ export class Api {
 
   domain: string = "";
   //url: string = 'http://jhouse.tjc.or.kr:8080';
-  url: string = "http://211.49.99.112:8080";
-  //url: string = 'http://localhost:8080';
+  //url: string = "http://211.49.99.112:8080";
+  url: string = 'http://localhost:8080';
   constructor(
     public http: HttpClient, 
     public location: Location,
