@@ -17,7 +17,7 @@ export class AccountPage implements AfterViewInit {
   username: string;
   email: string;
   user_id: string;
-  url: string =  "https://www.gravatar.com/avatar?d=mm&s=140";
+  url: string =  "./assets/img/none.png";
   firebase_id: string; 
   public birthYYYY: string;
   public birthMM: string;
