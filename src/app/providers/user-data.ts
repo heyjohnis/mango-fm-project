@@ -45,24 +45,31 @@ export class UserData {
   }
 
 
-	login(value): Promise<any> {
-		return firebase.auth().signInWithEmailAndPassword(value.email, value.password).then((res) => {
-			this.removeStorage();
-			let formData = new FormData();
-			formData.append("firebase_id", res.user.uid);
-			formData.append("user_id", '');
-			return this.api.post('user/getUser', formData).subscribe( (res: any) => {
-				this.user.user_id = res.user_id;
-				this.user.user_type = res.user_type;
-				window.dispatchEvent(new CustomEvent('user:'+this.user.user_type));
-				this.storage.set('user_data', res).then(()=>{
-					this.storage.set(this.HAS_LOGGED_IN, true).then(() => {
-						return window.dispatchEvent(new CustomEvent('user:login'));
-					});
-				});
-			});
-		});
-  	}
+// 	login(value): Promise<any> {
+// 		return firebase.auth().signInWithEmailAndPassword(value.email, value.password).then((res) => {
+// 			this.storage.clear();
+
+// 			let formData = new FormData();
+// 			formData.append("firebase_id", res.user.uid);
+// 			formData.append("user_id", '');
+// 			return this.api.post('user/getUser', formData).subscribe( (res: any) => {
+// 				this.user.user_id = res.user_id;
+// 				this.user.user_type = res.user_type;
+
+// 				window.dispatchEvent(new CustomEvent('user:'+this.user.user_type));
+// 				this.storage.set('user_data', res).then(()=>{
+// 					this.storage.set(this.HAS_LOGGED_IN, true).then(() => {
+// 						window.dispatchEvent(new CustomEvent('user:login'));
+// 						// 고객 자산현황으로 이동
+// 						if(res.user_type == '01')
+// 						return this.router.navigate(['/app/tabs/customer/detail' ,{cust_id : res.cust_id , cust_nm : '자산현황'}])
+// 						;
+// 						else return false;
+// ``					});
+// 				});
+// 			});
+// 		});
+//   	}
 
 	
 
@@ -189,9 +196,9 @@ export class UserData {
 	});
   }
 
-  removeStorage(){
-	this.storage.clear();
-  }
+//   removeStorage(){
+// 	this.storage.clear();
+//   }
 
   checkHasSeenTutorial(): Promise<string> {
 	return this.storage.get(this.HAS_SEEN_TUTORIAL).then((value) => {

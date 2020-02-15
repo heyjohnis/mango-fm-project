@@ -77,6 +77,10 @@ export class HomePage implements OnInit {
 	}
 
 	ngOnInit() {
+		window.addEventListener('user:01', () => {
+			console.log("Home Listenner : login"); 
+          return this.router.navigate(['/app/tabs/my-asset']);
+		});   
 		this.init();
 		 console.log("home ngOnInit");
 		 window.addEventListener('user:login', () => {

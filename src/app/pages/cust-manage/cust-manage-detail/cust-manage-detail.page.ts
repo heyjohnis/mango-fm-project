@@ -42,7 +42,8 @@ export class CustManageDetailPage implements OnInit {
 		private modalController: ModalController,
 		private api: Api,
 		private alertCtl: AlertController,
-		private util: UtilService
+		private util: UtilService,
+		private alertCtrl: AlertController
 		) { }
 
 	ngOnInit() {
@@ -151,6 +152,44 @@ export class CustManageDetailPage implements OnInit {
 		console.log("birthday : ", birthday);
 		return this.api.post('cust/updateBirthday', formData).subscribe( (resp) => {
 			console.log(resp);
+		});
+	}
+
+	async setUserId() {
+		const alert = await this.alertCtrl.create({
+		  header: '고객번호 등록',
+		  buttons: [
+			'Cancel',
+			{
+			  text: 'Ok',
+			  handler: (data: any) => {
+				this.updateUserId(this.cust_id, data.user_id)
+			  }
+			}
+		  ],
+		  inputs: [
+			{
+			  type: 'text',
+			  name: 'user_id',
+			  value: this.user_id,
+			  placeholder: '고객번호'
+			}
+		  ]
+		});
+		await alert.present();
+	  }
+	updateUserId(cust_id, user_id){
+		console.log("update user id : ", cust_id, user_id);
+		let formData = new FormData();
+		formData.append("cust_id", cust_id);
+		formData.append("user_id", user_id);
+		return this.api.post('cust/updateUserId', formData).subscribe( (resp: any) => {
+			console.log(resp);
+			if(resp.success == 1) {
+				this.user_id = user_id;
+			} else {
+				alert(user_id+" 고객번호가 존재하지 않습니다.");
+			}
 		});
 	}
 }

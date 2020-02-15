@@ -15,7 +15,7 @@ import { UserData } from '../../../providers/user-data';
 })
 export class CustomerDetailPage implements OnInit {
 
-    public dates: any;
+    public dates: any = [];
     public balance_date: string = '';
     public cust_id: string = '';
     public cust_nm: string = '자산현황';
@@ -65,11 +65,10 @@ export class CustomerDetailPage implements OnInit {
           console.log("login code : ", this.login_code);
         }
 
-        this.getData();
-        this.getUserData();
-        this.checkAuthUser();
-
         this.storage.get('cust_id').then((custId) =>{
+
+          console.log("custId : ", custId);
+
           if(custId != null) {
             console.log("custId : ", custId);
             this.custLogin = true;
@@ -78,9 +77,11 @@ export class CustomerDetailPage implements OnInit {
             this.cust_id = custId;
             this.cust_nm = '자산현황';
             window.dispatchEvent(new CustomEvent('user:00'));
-
-            this.getData();
           }
+
+          this.getData();
+          this.getUserData();
+          this.checkAuthUser();
 
           this.storage.get('user_data').then((data: any) => {
             this.image_url = this.api.url + "/profile/" + data.file_nm;
