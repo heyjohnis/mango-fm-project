@@ -132,6 +132,7 @@ export class CustManagePage implements OnInit {
 	processCustMerge(cust_id){
 		let formData = new FormData();
 		formData.append("cust_id", cust_id);
+		formData.append("fp_id", this.user_id);
 		return this.api.post('cust/mergeCust', formData).subscribe( (resp) => {
 			console.log("update merge customer : ", cust_id);
 			//document.getElementById('cust_'+cust_id).classList.add('sub');

@@ -217,20 +217,34 @@ export class HomePage implements OnInit {
 			formData.append('file', file.rawFile, file.name);
 			formData.append('fp_id', this.user_id);
 
-			return this.api.post('upload/upload-xls', formData).subscribe((resp) => {
+			return this.api.post('upload/upload-xls', formData).subscribe((resp: any) => {
 				console.log('데이터 처리 완료');
 				console.log(resp);
 				this.resultCount ++;
 				if(this.fileCount == this.resultCount) {
-					this.processDismiss();
+					this.setTotalAssetCalculate(resp);
 					this.resultCount = 0
 				}
-				this.resultFileUpload(resp);
+				//this.resultFileUpload(resp);
 			}, (err) => {
 				console.log('파일 업로드 실패');
 				console.log(err);
 				this.processDismiss();
 			});
+		});
+	}
+
+	setTotalAssetCalculate(resp){
+		let formData = new FormData();
+		formData.append('fp_id', this.user_id);
+		formData.append('balance_date', resp.balance_date);
+		return this.api.post('fund/calAssetRate', formData).subscribe((res) => {
+			console.log("total asset : ", res);
+			this.resultFileUpload(resp);
+			this.processDismiss();
+		}, (err)=>{
+			console.log("total asset err: ", err);
+			this.processDismiss();
 		});
 	}
 
@@ -341,7 +355,7 @@ export class HomePage implements OnInit {
 		this.isLoading = true
 		return await this.loadingController.create({
 		  message: '처리 중 입니다...',
-		  duration: 20000
+		  duration: 120000
 		}).then( a => {
 			a.present().then(()=>{
 				if(!this.isLoading){
