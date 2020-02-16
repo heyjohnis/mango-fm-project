@@ -224,6 +224,8 @@ export class HomePage implements OnInit {
 				if(this.fileCount == this.resultCount) {
 					this.setTotalAssetCalculate(resp);
 					this.resultCount = 0
+				} else {
+					this.setTotalAssetCalculate(resp);
 				}
 				//this.resultFileUpload(resp);
 			}, (err) => {
