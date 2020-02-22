@@ -25,7 +25,11 @@ export class AssetPage implements OnInit {
         const options: any = {
             title: '',
             legend: {position: 'bottom', alignment: 'center'},
-            pieSliceText: 'label',
+			pieSliceText: 'label',
+			animation:{
+				duration: 1000,
+				easing: 'out',
+			},
         };
         const chart = new google.visualization.LineChart(this.pieChart.nativeElement);
         chart.draw(data, options);

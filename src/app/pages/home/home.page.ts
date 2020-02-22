@@ -51,6 +51,7 @@ export class HomePage implements OnInit {
 			title: '',
 			legend: {position: 'right', alignment: 'center'},
 			pieSliceText: 'label',
+			animation: {"startup" : true}
 			//pieHole: 0.2
 
 		};

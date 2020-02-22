@@ -28,15 +28,12 @@
 <ion-content>
   <ion-item><ion-label>전체고객</ion-label>{{cnt_customers}}</ion-item>
   <ion-list>
-    <!-- <ion-list-header>
-      <ion-label>최신등록고객</ion-label>
-    </ion-list-header> -->
     <ion-item *ngFor="let customer of customers" (click)="gotoDetail(customer.cust_id, customer.cust_nm)">
     <ion-label class="list-name">{{customer.cust_nm}} <span>{{customer.account_no}}</span></ion-label>
     <div class="list-account">{{customer.eval_account | number}}</div>
-    <div class="list-rate">{{customer.profits_rate | percent}}</div>
+    <div class="list-rate">{{customer.profits_rate | percent:'1.1'}}</div>
     <div class="list-date">{{customer.reg_date.substring(0,10)}}</div>
-    <!-- <div><ion-icon slot="end" name="ios-arrow-forward"></ion-icon></div> -->
+    <div class="btn_arrow"><ion-icon name="ios-arrow-forward"></ion-icon></div>
 	</ion-item>
   </ion-list>
 </ion-content>

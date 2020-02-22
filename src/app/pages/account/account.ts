@@ -30,7 +30,12 @@ export class AccountPage implements AfterViewInit {
     public api: Api,
   ) { }
 
+
   ngAfterViewInit() {
+    //this.getUserData();
+  }
+
+  ionViewDidEnter(){
     this.getUserData();
   }
 
@@ -72,8 +77,11 @@ export class AccountPage implements AfterViewInit {
       this.user_id = data.user_id;
       this.email = data.email;
       this.firebase_id = data.firebase_id;
-      if(data.file_name != null && data.file_nm != '')
+      console.log("file_nm : ", data.file_nm);
+      if(data.file_nm != null && data.file_nm != '') {
         this.url = this.api.url+"/profile/"+data.file_nm;
+        console.log("data : ", this.url);
+      }
     });
   }
 

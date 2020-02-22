@@ -101,6 +101,10 @@ export class AssetResultPage implements OnInit {
 		this.cust_nm = this.route.snapshot.paramMap.get('cust_nm');
 		this.eval_account = this.route.snapshot.paramMap.get('eval_account');
 		this.birthday = this.route.snapshot.paramMap.get('birthday');
+	}
+
+
+	ionViewDidEnter(){
 		this.getAssetResult();
 		this.init();
 	}

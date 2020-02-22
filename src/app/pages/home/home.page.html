@@ -48,6 +48,7 @@
 		<ion-item *ngFor="let customer of customers | slice:0:5" (click) = "gotoCustDetail(customer.cust_id, customer.cust_nm)">
 			<ion-label>{{customer.cust_nm}}</ion-label>
 			<ion-label class="align-right">{{customer.reg_date.substring(0,10)}}</ion-label>
+			<div class="btn_arrow"><ion-icon name="ios-arrow-forward"></ion-icon></div>
 		</ion-item>
 	</ion-list>
 	<ion-list>
@@ -57,6 +58,7 @@
 		<ion-item *ngFor="let customer2 of customers_account | slice:0:5" (click) = "gotoCustDetail(customer2.cust_id, customer2.cust_nm)">
 			<ion-label>{{customer2.cust_nm}}</ion-label>
 			<ion-label class="align-right">{{customer2.eval_account | number}}</ion-label>
+			<div class="btn_arrow"><ion-icon name="ios-arrow-forward"></ion-icon></div>
 		</ion-item>
 	</ion-list>
 	<ion-list>
@@ -66,6 +68,7 @@
 		<ion-item *ngFor="let customer3 of customers_rate | slice:0:5" (click) = "gotoCustDetail(customer3.cust_id, customer3.cust_nm)">
 			<ion-label>{{customer3.cust_nm}}</ion-label>
 			<ion-label class="align-right">{{customer3.profits_rate | percent:'1.1'}}</ion-label>
+			<div class="btn_arrow"><ion-icon name="ios-arrow-forward"></ion-icon></div>
 		</ion-item>
 	</ion-list>
 	

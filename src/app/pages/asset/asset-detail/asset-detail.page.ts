@@ -26,9 +26,11 @@ export class AssetDetailPage implements OnInit {
     this.balance_date = this.route.snapshot.paramMap.get('balance_date');
     this.fp_id = this.route.snapshot.paramMap.get('fp_id');
 
-    this.getCustomList(this.fp_id, this.balance_date);
   }
 
+	ionViewDidEnter(){
+    this.getCustomList(this.fp_id, this.balance_date);
+  }
 
   getCustomList(fp_id, balance_date)  {
     console.log("getCustomList", fp_id)

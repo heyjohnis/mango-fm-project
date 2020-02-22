@@ -18,6 +18,7 @@
       <!-- <div style="margin-right:1em;">{{date.balance_date_group}}</div> -->
       <div (click)="gotoDetail(date.balance_date)">{{date.eval_account| number}}</div>
       <div class="option" (click)="delDate(date, i)"><ion-button color="danger">삭제</ion-button></div>
+      <div (click)="gotoDetail(date.balance_date)" class="btn_arrow"><ion-icon name="ios-arrow-forward"></ion-icon></div>
     </ion-item>
   </section>
 </ion-content>

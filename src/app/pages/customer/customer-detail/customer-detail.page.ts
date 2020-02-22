@@ -25,6 +25,7 @@ export class CustomerDetailPage implements OnInit {
     public profits_rate;
     public chart_data: any;
     public birthday: string = '';
+    public today_asset: any = null;
 
     //public domain: string = "http://jhouse.tjc.or.kr:8100/";
     public domain: string = "http://fadoctor.kr/";
@@ -79,14 +80,18 @@ export class CustomerDetailPage implements OnInit {
             window.dispatchEvent(new CustomEvent('user:00'));
           }
 
-          this.getData();
-          this.getUserData();
-          this.checkAuthUser();
+
 
           this.storage.get('user_data').then((data: any) => {
             this.image_url = this.api.url + "/profile/" + data.file_nm;
           });
         });
+    }
+
+    ionViewDidEnter(){
+      this.getData();
+      this.getUserData();
+      this.checkAuthUser();
     }
 
     checkCustLogin(){
@@ -102,6 +107,7 @@ export class CustomerDetailPage implements OnInit {
           console.log("오류 ", resp);
             this.dates = resp.dates;
             this.login_code = resp.login_code;
+            this.today_asset = resp[0];
             if(this.dates.length != 0)
               this.setKakaoMessage(this.dates[0]);
             this.chart_data = this.setChartData(this.util.setMonthlyData(this.dates, 4));

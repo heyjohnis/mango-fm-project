@@ -1,6 +1,8 @@
 // .account, .rate{justify-content:center; font-size:1.3em;}
 // .account span{font-size:0.7em;}
 
+.pie_chart{display: flex; align-items: center; justify-content: center;}
+
 .asset_info{font-size:0.95em;}
 .more_info{
     height:0;
@@ -43,3 +45,5 @@
 .btn_rate{font-size:0.95em;}
 .btn_rate span{margin-left:1em; font-size:0.9em; color:var(--ion-color-light)}
 .input_rate ion-input{text-align: right;}
+.input_rate ion-label{width:150px;}
+.input_rate ion-input{background: var(--ion-color-light);}
