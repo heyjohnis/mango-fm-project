@@ -42,6 +42,18 @@ export class CustomerPage implements OnInit {
 		});
 	}
 
+	ionViewDidEnter(){
+		console.log("ionViewDidEnter");
+	}	
+
+	ionViewWillLeave(){
+		console.log("ionViewWillLeave");
+	}	
+
+	ionViewDidLeave(){
+		console.log("ionViewDidLeave");
+	}
+
 	getCustomers(user_id){
 		let formData = new FormData();
 		formData.append("fp_id", user_id);

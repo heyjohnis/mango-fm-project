@@ -10,7 +10,9 @@
 
 <ion-content>
   <div #pieChart style="height:280px;"> </div>
-  <ion-item *ngFor="let date of dates; let i = index" id="asset{{i+1}}" (click) = "gotoAssetResult(cust_id, cust_nm, date.balance_date, date.eval_account )" >
+  <ion-item *ngFor="let date of dates; let i = index" id="asset{{i+1}}" 
+      lines="{{i== 0 ? 'none' : ''}}"
+      (click) = "gotoAssetResult(cust_id, cust_nm, date.balance_date, date.eval_account )" >
     <ion-grid>
       <ion-row>
         <ion-col size="{{i == 0 ? 12 : 4}}" class="balance_date">
@@ -24,6 +26,11 @@
         </ion-col>
         <ion-col *ngIf="i == 0" size="12">
           <ion-button class="ion-float-right" color="secondary">자산내역 상세보기</ion-button>
+        </ion-col>
+        <ion-col *ngIf="i == 0" size="12">
+          <ion-list-header>
+            <ion-label>이전 현황</ion-label>
+          </ion-list-header>
         </ion-col>
         <ion-col *ngIf="i != 0" size="1">
           <div class="btn_arrow"><ion-icon name="ios-arrow-forward"></ion-icon></div>

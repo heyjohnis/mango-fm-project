@@ -22,7 +22,7 @@ export class MyAssetPage implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.processLoading();
+    //this.processLoading();
     this.login_code = this.route.snapshot.paramMap.get('login_code');
     this.getData(this.login_code);
   }
@@ -34,8 +34,9 @@ export class MyAssetPage implements OnInit {
     return this.api.post('fund/loginCode', formData).subscribe( (res: any) => {
         console.log("code : ",res);
         this.storage.set('cust_id', res.cust_id).then(()=>{
-          this.processDismiss();
-          return this.router.navigate(['/app/tabs/my-asset']);
+          //this.processDismiss();
+          //return this.router.navigate(['/app/tabs/my-asset']);
+          return this.router.navigateByUrl('/app/tabs/my-asset');
         });
     });
   }

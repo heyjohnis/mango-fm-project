@@ -26,6 +26,7 @@ export class CustomerDetailPage implements OnInit {
     public chart_data: any;
     public birthday: string = '';
     public today_asset: any = null;
+    
 
     //public domain: string = "http://jhouse.tjc.or.kr:8100/";
     public domain: string = "http://fadoctor.kr/";
@@ -59,39 +60,31 @@ export class CustomerDetailPage implements OnInit {
     ngOnInit() {
         this.cust_id = this.route.snapshot.paramMap.get('cust_id');
         this.cust_nm = this.route.snapshot.paramMap.get('cust_nm');
-        this.login_code = this.route.snapshot.paramMap.get('login_code');
-
-        if(this.login_code != '' && this.login_code != null ) {
-          this.storage.clear;
-          console.log("login code : ", this.login_code);
-        }
-
+        this.login_code = this.route.snapshot.paramMap.get('login_code');   
+        this.checkAuthUser();
+ 
         this.storage.get('cust_id').then((custId) =>{
-
-          console.log("custId : ", custId);
-
           if(custId != null) {
             console.log("custId : ", custId);
             this.custLogin = true;
-
-            //this.checkCustLogin();
             this.cust_id = custId;
             this.cust_nm = '자산현황';
+
+            this.getData();
+            this.getUserData();
             window.dispatchEvent(new CustomEvent('user:00'));
+          } else {
+            this.custLogin = false;
+            this.getData();
+            this.storage.get('user_data').then((data: any) => {
+              this.image_url = this.api.url + "/profile/" + data.file_nm;
+            });
           }
-
-
-
-          this.storage.get('user_data').then((data: any) => {
-            this.image_url = this.api.url + "/profile/" + data.file_nm;
-          });
+          
         });
-    }
+        
 
-    ionViewDidEnter(){
-      this.getData();
-      this.getUserData();
-      this.checkAuthUser();
+
     }
 
     checkCustLogin(){
@@ -104,7 +97,7 @@ export class CustomerDetailPage implements OnInit {
         let formData = new FormData();
         formData.append("cust_id", this.cust_id);
         return this.api.post('fund/dates', formData).subscribe( (resp: any) => {
-          console.log("오류 ", resp);
+          console.log("데이터 ", resp);
             this.dates = resp.dates;
             this.login_code = resp.login_code;
             this.today_asset = resp[0];
@@ -115,6 +108,7 @@ export class CustomerDetailPage implements OnInit {
             google.charts.load('current', { 'packages': ['corechart'] });
             google.charts.setOnLoadCallback(this.drawChart);
         });
+        
     }
 
     getUserData(){
@@ -131,7 +125,6 @@ export class CustomerDetailPage implements OnInit {
         if(user_type == '10' || user_type == '99') 
           document.querySelector<HTMLInputElement>('#kakao').style.display = 'block';
         else document.querySelector<HTMLInputElement>('#kakao').style.display = 'nonek';
-
       });
     }
 
