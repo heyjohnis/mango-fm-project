@@ -162,7 +162,7 @@ export class AssetResultPage implements OnInit {
 			this.invest_after_rate/100, 
 			this.period_pension, 
 			this.retired_fv, 
-			this.remain_asset, 
+			this.remain_asset * -1, 
 			0
 		) / 12);
 	}
