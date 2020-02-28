@@ -3,8 +3,8 @@
 // #asset1 ion-grid{height:120px !important;}
 
 // #asset1 ion-col{position: absolute;}
-#asset1 .balance_date{right:0; font-size:0.8em; color:var(--ion-color-medium);}
-#asset1 .balance_date::before{content:'기준일: ';}
-#asset1 .eval_account{font-size:1.5em;}
-#asset1 .rate{font-size:1.5em;}
+#asset1 .balance_date{right:0; font-size:1em;}
+//#asset1 .balance_date::before{content:'기준일 :  '; font-size:0.8em; color:var(--ion-color-medium);}
+#asset1 .eval_account{font-size:1.6em;}
+#asset1 .rate{font-size:1.6em;}
 ion-list-header{padding:0;}
