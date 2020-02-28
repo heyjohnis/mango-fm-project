@@ -76,6 +76,7 @@ export class CustomerDetailPage implements OnInit {
           } else {
             this.custLogin = false;
             this.getData();
+            this.getUserData();
             this.storage.get('user_data').then((data: any) => {
               this.image_url = this.api.url + "/profile/" + data.file_nm;
             });

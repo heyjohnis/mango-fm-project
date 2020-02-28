@@ -39,8 +39,8 @@
 .calculate .input ion-label{width:95px;}
 .calculate ion-input{margin-left: 1em; background: var(--ion-color-light); margin-right: 0.5em;}
 
-.input_rate{height:100%; overflow: hidden; transition: height 0.2s ease-in-out;}
-.input_rate.close{height:0; transition: height 0.2s ease-in-out;}
+.input_rate{height:100%; padding:1em 0.5em; overflow: hidden; transition: height 0.2s ease-in-out;}
+.input_rate.close{height:0; padding:0; transition: height 0.2s ease-in-out;}
 
 .btn_rate{font-size:0.95em;}
 .btn_rate span{margin-left:1em; font-size:0.9em; color:var(--ion-color-light)}

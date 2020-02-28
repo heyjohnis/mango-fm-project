@@ -124,7 +124,11 @@ export class AssetResultPage implements OnInit {
 		this.retired_age = this.ages.lower;
 		this.pension_end_age = this.ages.upper;
 
-		if(this.current_age > this.retired_age) this.retired_age = this.current_age + 1;
+		if(this.current_age > this.retired_age) {
+			this.retired_age = this.current_age;
+			this.ages.lower = this.retired_age;
+		} 
+		console.log("current : ", this.current_age,this.retired_age);
 		this.invest_before_rate = 5;
 		this.invest_after_rate = 4;
 		this.inflation_rate = 2;
