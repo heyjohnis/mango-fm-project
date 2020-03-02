@@ -7,17 +7,17 @@
       <ion-label>홈</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="customer" *ngIf="!custLogin">
+    <ion-tab-button tab="customer" *ngIf="!custLogin" routerLink="/app/tabs/customer" >
       <ion-icon name="contacts"></ion-icon>
       <ion-label>고객</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="asset" *ngIf="!custLogin">
+    <ion-tab-button tab="asset" *ngIf="!custLogin"  routerLink="/app/tabs/asset">
       <ion-icon name="logo-usd"></ion-icon>
       <ion-label>자산</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="my-asset" *ngIf="custLogin">
+    <ion-tab-button tab="my-asset" *ngIf="custLogin" routerLink="/app/tabs/my-asset">
       <ion-icon name="logo-usd"></ion-icon>
       <ion-label>자산</ion-label>
     </ion-tab-button>

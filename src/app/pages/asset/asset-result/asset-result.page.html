@@ -18,11 +18,15 @@
 	<ion-item class="account">
 		<ion-label>손익</ion-label> {{balance_account | number}} 원
 	</ion-item>	
-
+	<p class="notice" padding style="margin-top:-0.5em;">
+		상기 수익률 및 자산현황은 실시간 데이터가 아닌 해당일의 데이터입니다. 
+		정확한 자산의 확인은 "한국투자증권" 홈페이지 또는 어플에서 확인이 가능합니다. 
+		<br/>자산의 입출금에 따라 실제수익률과 오차가 발생할 수 있습니다. 
+	</p>
 	<div #pieChart style="height:280px;" class="pie_chart"><ion-spinner name="lines"></ion-spinner></div>
 
 	<section class="retired_simulation">
-		<ion-button expand="block" sharp="round" color="secondary" (click)="openRetiredSimulation()">은퇴 시뮬레이션 실행하기</ion-button>
+		<ion-button class="btn_retired" expand="block" sharp="round" color="secondary" (click)="openRetiredSimulation()">은퇴 시뮬레이션 실행하기 <span color="danger">클릭</span></ion-button>
 		<ion-grid class="close" id="retired_simulation">
 			<ion-row class="ages_range">
 				<ion-col size="2" class="current_age">
@@ -60,7 +64,7 @@
 				<ion-item><ion-label>은퇴후 기대수익률</ion-label><ion-input type="number" step="0.1" pattern="/^\d*[.]\d{2}$/" [(ngModel)]="invest_after_rate" (change)="calcRetirePlan()"></ion-input>%</ion-item>
 				<ion-item><ion-label>물가상승률</ion-label><ion-input type="number" step="0.1" pattern="/^\d*[.]\d{2}$/" [(ngModel)]="inflation_rate" (change)="calcRetirePlan()"></ion-input>%</ion-item>
 			</ion-list>
-			
+			<p class="notice">수익률 및 기간을 조정하시면 향후 받으실 수 있는 연금액을 예측할수 있습니다.</p>
 
 			<ion-list class="calculate" lines="none">
 				<ion-list-header >은퇴시점 자산 계산</ion-list-header>
@@ -82,6 +86,8 @@
 					<ion-label>잔존자산</ion-label>
 					<ion-input type="number" pattern="\d*" [(ngModel)]="remain_asset" (change)="calcRetirePlan()"></ion-input><div>만원</div>
 				</ion-item>
+				<p class="comment">* 은퇴자산 인출후 남는 자산</p>
+
 				<ion-item>
 					<ion-label>은퇴시점 연금액</ion-label>
 					<div class="text_account">{{annuity_fv | number}}<span>만원</span></div>
@@ -93,6 +99,7 @@
 			</ion-list>
 
 		</ion-grid>
+		<p class="notice">현재 고객님의 은퇴자산을 반영하여 향후 연금액을 조회하실 수 있습니다.</p>
 	</section>
 	<ion-list *ngFor="let assets of assets_group; let i = index">
 		<ion-list-header >{{asset_cds[assets.asset_cd]}}</ion-list-header>
