@@ -8,6 +8,9 @@ import { Api } from '../../providers/api/api';
 import { UserOptions } from '../../interfaces/user-options';
 import * as firebase from 'firebase';
 
+declare var company_cds: any;
+
+
 @Component({
   selector: 'page-account',
   templateUrl: 'account.html',
@@ -19,8 +22,15 @@ export class AccountPage implements AfterViewInit {
   user_id: string;
   url: string =  "./assets/img/none.png";
   firebase_id: string; 
+  company_cd: string;
+  branch_nm: string; 
+  fa_code: string; 
+
+
   public birthYYYY: string;
   public birthMM: string;
+
+  company_cds: any;
 
   constructor(
     public alertCtrl: AlertController,
@@ -28,7 +38,10 @@ export class AccountPage implements AfterViewInit {
     public userData: UserData,
     public storage: Storage,
     public api: Api,
-  ) { }
+  ) { 
+		this.company_cds = company_cds;
+
+  }
 
 
   ngAfterViewInit() {
@@ -77,6 +90,9 @@ export class AccountPage implements AfterViewInit {
       this.user_id = data.user_id;
       this.email = data.email;
       this.firebase_id = data.firebase_id;
+      this.company_cd = data.company_cd;
+      this.branch_nm = data.branch_nm;
+      this.fa_code = data.fa_code;
       console.log("file_nm : ", data.file_nm);
       if(data.file_nm != null && data.file_nm != '') {
         this.url = this.api.url+"/profile/"+data.file_nm;

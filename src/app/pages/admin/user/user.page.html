@@ -1,0 +1,95 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button></ion-menu-button>
+		</ion-buttons>
+		<ion-title>사용자관리</ion-title>
+	</ion-toolbar>
+	<ion-toolbar>
+		<ion-grid>
+			<ion-row>
+			<ion-col size="4">
+				<ion-searchbar [(ngModel)]="search_user_nm" (ionChange)="getUsers()" placeholder="검색할 이름을 입력하세요"></ion-searchbar>
+			</ion-col>
+			<ion-col>
+				<ion-radio-group (ionChange)="getUsers()" [(ngModel)]="user_type">
+				<ion-row size="6" class="sel_user_type">
+					<ion-col size="4">
+					<ion-item>
+					<ion-radio value=""></ion-radio>
+					<ion-label>전체</ion-label>
+					</ion-item>
+					</ion-col>
+					<ion-col size="4">
+					<ion-item>
+					<ion-radio value="10"></ion-radio>
+					<ion-label>FA</ion-label>
+					</ion-item>
+					</ion-col>	
+					<ion-col size="4">
+					<ion-item>
+					<ion-radio value="99"></ion-radio>
+					<ion-label>관리자</ion-label>
+					</ion-item>
+					</ion-col>
+				</ion-row>
+				</ion-radio-group>
+			</ion-col>
+			<ion-col size="2" class="chk_no_apply">
+				<ion-item>
+					<ion-checkbox color="primary" name="no-apply" [(ngModel)]="isApply" (ionChange)="checkIsApply()"></ion-checkbox>
+					<ion-label for="no-apply"> 미승인</ion-label>
+				</ion-item>
+			</ion-col>
+			</ion-row>
+		</ion-grid>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+	<ion-item><ion-label>전체사용자</ion-label>{{cnt_customers}}</ion-item>
+	<ion-list>
+		<!-- <ion-list-header>
+			<ion-label>최신등록고객</ion-label>
+		</ion-list-header> -->
+		<ion-item>
+			<ion-grid>
+				<ion-row class="tb_header">
+					<ion-col (click)="orderBy('user_nm')">사용자</ion-col>	
+					<ion-col (click)="orderBy('user_id')">사번</ion-col>	
+					<ion-col (click)="orderBy('eval_account')">모집금액</ion-col>	
+					<ion-col (click)="orderBy('cust_cnt')">고객수</ion-col>	
+					<ion-col (click)="orderBy('upload_cnt')">업로드수</ion-col>	
+					<ion-col (click)="orderBy('last_upload_date')">업로드일자</ion-col>	
+					<ion-col (click)="orderBy('reg_date')">등록일</ion-col>
+				</ion-row>
+				<ion-row *ngFor="let user of users; let i = index" (click)="modalDetail(user, i)" [ngClass]="{'no_apply': user.apply_yn == 'n'}">
+					<ion-col class="align-left">
+						<ion-label class="user_nm">{{user.user_nm}}
+							<span class="user_type">({{setUserType(user.user_type)}})</span>
+						</ion-label>
+					</ion-col>
+					<ion-col class="align-center">
+						{{user.user_id}}
+					</ion-col>
+					<ion-col class="align-right">
+						{{user.eval_account | number}}
+					</ion-col>
+					<ion-col class="align-center">
+						{{user.cust_cnt}}
+					</ion-col>
+					<ion-col class="align-center">
+						{{user.upload_cnt}}
+					</ion-col>
+					<ion-col class="align-center upload_date">
+						{{user.last_upload_date | toDate}}
+					</ion-col>
+					<ion-col class="align-center">
+						<div class="list-date">{{user.reg_date | date:'yyyy-MM-dd'}}</div>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ion-item>
+	</ion-list>
+</ion-content>

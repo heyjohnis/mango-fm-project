@@ -1,0 +1,71 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title>{{user.user_nm}} 상세정보</ion-title>
+		<ion-buttons class="btn_close" slot="end" (click) = "closeModal()">
+			<ion-icon name="close"></ion-icon>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-list>
+		<ion-item>
+			<ion-label>이름</ion-label>
+			<div>{{user.user_nm}}</div>
+		</ion-item>
+		<ion-item>
+			<ion-label>사번</ion-label>
+			<div>{{user.user_id}}</div>
+		</ion-item>
+		<ion-item>
+			<ion-label>이메일</ion-label>
+			<div>{{user.email}}</div>
+		</ion-item>
+		<ion-item class="inp">
+			<ion-label>휴대폰</ion-label>
+			<ion-input [(ngModel)]="user.mobile"></ion-input>
+		</ion-item>
+		<ion-item class="inp">
+			<ion-label>권유자코드</ion-label>
+			<ion-input [(ngModel)]="user.fa_code"></ion-input>
+		</ion-item>
+		<ion-item class="inp">
+			<ion-label>소속</ion-label>
+			<ion-input [(ngModel)]="user.branch_nm"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label>모집금액</ion-label>
+			<div>{{user.eval_account | number}}</div>
+		</ion-item>
+		<ion-item>
+			<ion-label>고객수</ion-label>
+			<div>{{user.cust_cnt}}</div>
+		</ion-item>
+		<ion-item>
+			<ion-label>업로드일자</ion-label>
+			<div>{{user.last_upload_date | toDate}}</div>
+		</ion-item>
+		<ion-item>
+			<ion-label>등록일</ion-label>
+			<div>{{user.reg_date | date:'yyyy-MM-dd'}}</div>
+		</ion-item>
+		<ion-item>
+			<ion-label>사용승인</ion-label>
+			<ion-checkbox color="primary" name="apply_yn" [(ngModel)]="apply_yn" (ionChange)="applyUser()"></ion-checkbox>
+		</ion-item>
+		<ion-item>
+			<ion-label>회원등급</ion-label>
+			<ion-select [(ngModel)]="user.user_type" okText="확인" cancelText="취소" (ionChange)="selectUserType()" [ngModelOptions]="{standalone: true}">
+				<ion-select-option value="10">FA</ion-select-option>
+				<ion-select-option value="99">관리자</ion-select-option>
+			</ion-select>
+		</ion-item>
+
+	</ion-list>
+</ion-content>
+<ion-footer>
+	<ion-toolbar class="align-right ft_button">
+		<ion-button color="danger"(click)="delUser()">삭제</ion-button>
+		<ion-button (click)="updateUser()">저장</ion-button>
+	</ion-toolbar>
+</ion-footer>

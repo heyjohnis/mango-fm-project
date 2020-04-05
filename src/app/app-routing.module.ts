@@ -91,6 +91,18 @@ const routes: Routes = [
       }
     ]
     
+  },
+  {
+    path: 'guide',
+    loadChildren: () => import('./pages/guide/guide.module').then( m => m.GuidePageModule)
+  },
+  {
+    path: 'user',
+    loadChildren: () => import('./pages/admin/user/user.module').then( m => m.UserPageModule)
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./pages/admin/admin.module').then( m => m.AdminPageModule)
   }
 ];
 

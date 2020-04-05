@@ -25,3 +25,8 @@ const user_type_cds = {
 	"10":"FA", 
 	"99":"관리자"
 };
+
+const company_cds = {
+	"01":"한국투자증권"
+};
+

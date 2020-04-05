@@ -4,14 +4,17 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { SignupPage } from './signup';
+import { FaModalPageModule  } from './fa-modal/fa-modal.module'
 import { SignupPageRoutingModule } from './signup-routing.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SignupPageRoutingModule
+    SignupPageRoutingModule,
+    FaModalPageModule
   ],
   declarations: [
     SignupPage,

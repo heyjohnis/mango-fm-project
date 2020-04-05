@@ -1,55 +1,81 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>회원가입</ion-title>
+	<ion-buttons slot="start">
+	  <ion-menu-button></ion-menu-button>
+	</ion-buttons>
+	<ion-title>회원가입</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <div class="signup-logo">
-    <img src="assets/img/logo_w.png" alt="Fadoctor logo">
-  </div>
+	<div class="signup-logo">
+		<img src="assets/img/logo_w.png" alt="Fadoctor logo">
+	</div>
 
-  <form #signupForm="ngForm" novalidate>
-    <ion-list lines="none">
-      <ion-item>
-        <ion-label position="stacked" color="primary">이름</ion-label>
-        <ion-input [(ngModel)]="signup.username" name="username" type="text" #username="ngModel" required>
-        </ion-input>
-      </ion-item>
-      <ion-text color="danger">
-        <p [hidden]="username.valid || submitted == false" class="ion-padding-start">
-          이름을 입력하세요
-        </p>
-      </ion-text>
-      <ion-item>
-        <ion-label position="stacked" color="primary">이메일</ion-label>
-        <ion-input [(ngModel)]="signup.email" name="email" type="text" #email="ngModel" required>
-        </ion-input>
-      </ion-item>
-      <ion-text color="danger">
-        <p [hidden]="email.valid || submitted == false" class="ion-padding-start">
-          이메일을 입력하세요
-        </p>
-      </ion-text>
-      <ion-item>
-        <ion-label position="stacked" color="primary">패스워드</ion-label>
-        <ion-input [(ngModel)]="signup.password" name="password" type="password" #password="ngModel" required>
-        </ion-input>
-      </ion-item>
-      <ion-text color="danger">
-        <p [hidden]="password.valid || submitted == false" class="ion-padding-start">
-          패스워드를 입력하세요
-        </p>
-      </ion-text>
-    </ion-list>
+	<form #signupForm="ngForm" novalidate>
 
-    <div class="ion-padding">
-      <ion-button (click)="onSignup(signupForm)" type="submit" expand="block">신청</ion-button>
-    </div>
-  </form>
+		<ion-list lines="none">
+			<ion-segment value="01" class="ion-padding" value="01" (ionChange)="onChangeUserType($event)">
+				<ion-segment-button value="01">
+					고객
+				</ion-segment-button>
+				<ion-segment-button value="10">
+					FA
+				</ion-segment-button>
+			</ion-segment>
+			<ion-item>
+				<ion-label position="stacked" color="primary">이름</ion-label>
+				<ion-input [(ngModel)]="signup.username" name="username" type="text" #username="ngModel" required></ion-input>
+			</ion-item>
+			<ion-text color="danger">
+				<p [hidden]="username.valid || submitted == false" class="ion-padding-start">이름을 입력하세요</p>
+			</ion-text>
+			<ion-item>
+				<ion-label position="stacked" color="primary">이메일</ion-label>
+				<ion-input [(ngModel)]="signup.email" name="email" type="text" #email="ngModel" required></ion-input>
+			</ion-item>
+			<ion-text color="danger">
+				<p [hidden]="email.valid || submitted == false" class="ion-padding-start">이메일을 입력하세요</p>
+			</ion-text>
+			<ion-item *ngIf="is_fa == 'y'">
+				<ion-label position="stacked" color="primary">소속회사</ion-label>
+				<ion-select [(ngModel)]="company_cd"  okText="확인" cancelText="취소" (ionChange)="selectCompanyCd()" [ngModelOptions]="{standalone: true}">
+					<ion-select-option value="01">한국투자증권</ion-select-option>
+				</ion-select>
+			</ion-item>
+			<ion-item *ngIf="is_fa == 'y'">
+				<ion-label position="stacked" color="primary">소속지점</ion-label>
+				<ion-input [(ngModel)]="branch_nm" name="branch_nm" type="text" required></ion-input>
+			</ion-item>
+			<ion-text color="danger">
+				<p [hidden]="branch_nm.valid || submitted == false" class="ion-padding-start">소속지점을 입력하세요</p>
+			</ion-text>
+			<ion-item *ngIf="is_fa == 'y'">
+				<ion-label position="stacked" color="primary">권유자코드</ion-label>
+				<ion-input [(ngModel)]="fa_code" name="fa_code" type="text" required (ionChange)="checkFaCode()"></ion-input>
+			</ion-item>
+			<ion-item *ngIf="is_fa != 'y'">
+				<ion-label position="stacked" color="primary">권유자코드</ion-label>
+				<ion-input [(ngModel)]="fa_code" name="fa_code" type="text" required readonly (click)="faModal()"></ion-input>
+			</ion-item>
+			<ion-text color="danger">
+				<p [hidden]="fa_code.valid || submitted == false" class="ion-padding-start">권유자코드를 입력하세요</p>
+				<p [hidden]="check_fa_code == true || fa_code.length < 6" class="ion-padding-start">이미 등록된 권유자코드입니다</p>
+				
+			</ion-text>
+			<ion-item>
+				<ion-label position="stacked" color="primary">패스워드</ion-label>
+				<ion-input [(ngModel)]="signup.password" name="password" type="password" #password="ngModel" required></ion-input>
+			</ion-item>
+			<ion-text color="danger">
+				<p [hidden]="password.valid || submitted == false" class="ion-padding-start">패스워드를 입력하세요</p>
+			</ion-text>
+		</ion-list>
+
+		<div class="ion-padding">
+			<ion-button (click)="onSignup(signupForm)" type="submit" expand="block">신청</ion-button>
+		</div>
+	</form>
 
 </ion-content>

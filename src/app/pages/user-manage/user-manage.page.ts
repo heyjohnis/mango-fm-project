@@ -32,11 +32,14 @@ export class UserManagePage implements OnInit {
 	getUsers(){
 
 		let formData = new FormData();
-    formData.append("user_id", this.user_id);
-    formData.append("user_nm", this.user_nm);
-    formData.append("user_type", this.user_type);
-    formData.append("email", this.email);
-    formData.append("search_user_nm", this.search_user_nm);
+		formData.append("user_id", this.user_id);
+		formData.append("user_nm", this.user_nm);
+		formData.append("user_type", this.user_type);
+		formData.append("email", this.email);
+		formData.append("search_user_nm", this.search_user_nm);
+		formData.append("apply_yn", '');
+		formData.append("order_by", '');
+		formData.append("order_by_type", '');
 
     console.log("search_user_nm : ", this.search_user_nm);
 

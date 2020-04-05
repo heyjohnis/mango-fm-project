@@ -32,3 +32,28 @@ p {
     color: #000000;
   }
 }
+
+.area {
+  margin-bottom:10px;
+  padding: 15px;
+  background: rgba(0,0,0,0.05);
+}
+
+#dropZone {
+  border: 2px dashed #bbb;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  font: 15pt bold arial;
+  color: #bbb;
+}
+
+.drop-file-over{
+background: #888;
+}
+
+.prev{text-align:left;}
+
+.next{text-align:right;}
+

@@ -11,7 +11,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-// import { AngularFireAuthModule } from '@angular/fire/auth';
 import { GoogleChartsModule } from 'angular-google-charts';
 import * as Kakao from '../assets/js/kakao.min';
 
@@ -22,8 +21,11 @@ import { CustomerService } from './providers/customer.service';
 import { MyfireService } from './providers/myfire.service'
 
 import * as firebase from 'firebase';
+//import * as admin from 'firebase-admin';
+
 
 // import * as admin from 'firebase-admin';
+//declare var admin: any;
 
 firebase.initializeApp(environment.firebase);
 // admin.initializeApp({

@@ -38,15 +38,19 @@ export class LoginPage {
 				formData.append("firebase_id", res.user.uid);
 				formData.append("user_id", '');
 				return this.api.post('user/getUser', formData).subscribe( (res: any) => {
-	
-					window.dispatchEvent(new CustomEvent('user:'+res.user_type));
-					window.dispatchEvent(new CustomEvent('user:login'));
+					console.log("login res : ", res);
+					if(res.apply_yn != 'n' || res.user_type == '01') {
+						window.dispatchEvent(new CustomEvent('user:'+res.user_type));
+						window.dispatchEvent(new CustomEvent('user:login'));
+						this.storage.set('user_data', res).then(()=>{
+							this.storage.set('hasLoggedIn', true).then(() => {
+								this.gotoUrl(res.user_type, res.cust_id, res.upload_cnt);
+							});
+						});
+					} else {
+						this.notYetAlert();
+					}
 
-					this.storage.set('user_data', res).then(()=>{
-						this.storage.set('hasLoggedIn', true).then(() => {
-							this.gotoUrl(res.user_type, res.cust_id);
-	``					});
-					});
 				});
 			}).catch((err) => {
 				console.log('error : ', err);
@@ -55,15 +59,35 @@ export class LoginPage {
 		}
 	}
 
-	gotoUrl(type, cust_id){
+	async notYetAlert(){
+		const alert = await this.alertCtl.create({
+			header: '가입승인 대기중',
+			message: '가입승인 대기중입니다. <br/>가입승인을 기다리세요.',
+			buttons: [
+        {
+          text:'확인',
+          handler: ()=>{
+            this.router.navigateByUrl('/login');
+          }
+        }
+      ]
+		});  
+    await alert.present();
+  }
+
+
+	gotoUrl(type, cust_id, upload_cnt){
 		// 고객 자산현황으로 이동
 		console.log("goto url : ", type, cust_id);
 		if(type == '01') 
 			this.storage.set('cust_id', cust_id).then(()=>{
 				return this.router.navigateByUrl('/app/tabs/my-asset');
 			});
-		else 
-			return this.router.navigateByUrl('/app/tabs/home');
+		else {
+			if(upload_cnt == 0) return this.router.navigateByUrl('/tutorial');
+			else return this.router.navigateByUrl('/app/tabs/home');
+		}
+			
 	}
 
 	loginErrorMessage(code): void {

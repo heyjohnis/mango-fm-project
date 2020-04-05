@@ -327,11 +327,11 @@ export class HomePage implements OnInit {
 
 	async resultToast(header, massege) {
 		const toast = await this.toastController.create({
-		  header: header,
-		  message: massege,
-		  position: 'bottom',
-		  duration: 2000,
-		  showCloseButton: true,
+			header: header,
+			message: massege,
+			position: 'bottom',
+			duration: 2000,
+			showCloseButton: true,
 
 		//   buttons: [
 		// 	// {
@@ -368,10 +368,10 @@ export class HomePage implements OnInit {
 		});
 	  }
 
-	  async processDismiss() {
+	async processDismiss() {
 		this.isLoading = false;
 		return await this.loadingController.dismiss().then(() => console.log("loading dismiss"));
-	  }
+	}
 	  
 
 }

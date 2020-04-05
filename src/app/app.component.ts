@@ -197,4 +197,9 @@ export class AppComponent implements OnInit {
     this.storage.set('ion_did_tutorial', false);
     this.router.navigateByUrl('/tutorial');
   }
+
+  gotoAdminUser(){
+    // this.menu.enable(false);
+    this.router.navigateByUrl('/admin/user');
+  }
 }

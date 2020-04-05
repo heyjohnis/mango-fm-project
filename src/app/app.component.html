@@ -117,6 +117,15 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-menu-toggle autoHide="false">
+            <ion-item (click)="gotoAdminUser()" routerDirection="root">
+              <ion-icon slot="start" name="cog"></ion-icon>
+              <ion-label>
+                관리자    
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
       </ion-footer>
     </ion-menu>
 

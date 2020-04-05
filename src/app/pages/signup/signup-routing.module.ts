@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: SignupPage
+  },
+  {
+    path: 'fa-modal',
+    loadChildren: () => import('./fa-modal/fa-modal.module').then( m => m.FaModalPageModule)
   }
 ];
 

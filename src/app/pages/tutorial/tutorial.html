@@ -1,49 +1,195 @@
 <ion-header no-border>
-  <ion-toolbar>
-    <ion-buttons slot="end">
-      <ion-button color='primary' (click)="startApp()" [hidden]="!showSkip">Skip</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+	<ion-toolbar>
+		<ion-buttons slot="end">
+			<ion-button color='primary' (click)="startApp()" [hidden]="!showSkip">Skip</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
-  <ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager="false">
-    <ion-slide>
-      <img src="assets/img/ica-slidebox-img-1.png" class="slide-image" />
-      <h2 class="slide-title">
-        Welcome to
-        <b>ICA</b>
-      </h2>
-      <p>
-        The
-        <b>ionic conference app</b> is a practical preview of the ionic framework in action, and a demonstration of proper code
-        use.
-      </p>
-    </ion-slide>
+	<ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager="false">
+		<!-- 1 -->
+		<ion-slide>
+			<h2 class="slide-title">상품별 퇴직연금 계좌 파일처리</h2>
+			<p>
+				반갑습니다.<br/>
+				처음 사용하시는데 세팅을 도와 드리겠습니다.<br/>
+				우선, 오늘 다운로드 받으신 <br/>
+				<br/>
+				<b>‘상품별 퇴직연금 계좌 리스트_20YYMMDD_12345.xls’</b><br/>
+				<br/>
+				파일을 아래에 드래그해 놓으세요.<br/>
+			</p>
+			<div class="file_upload">
+				<div ng2FileDrop [ngClass]="{'drop-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event, '상품별')" [uploader]="fileUploader"
+					class="area">
+					<div id="dropZone">이곳으로 업로드할 파일을 드래그하세요</div>
+				</div>
+			</div>
+			<p>파일 없으면 아래의 [다음] 버튼을 누르세요</p>
+			<ion-grid>
+				<ion-row>
+					<ion-col>
+						<ion-button class="next" (click)="next()">다음</ion-button>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ion-slide>
+		<!-- 2 -->
+		<ion-slide>
+			<h2 class="slide-title">펀드 CMA 신탁 파일처리</h2>
+			<p>
+				오늘 다운로드 받은 <br/>
+				'FC 펀드_CMA_신탁_20YYMMDD_12345.xls’ <br/>
+				파일을 아래에 드래그해 놓으세요 
+			</p>
+			<div class="file_upload">
+				<div ng2FileDrop [ngClass]="{'drop-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event, '펀드')" [uploader]="fileUploader"
+					class="area">
+					<div id="dropZone">이곳으로 업로드할 파일을 드래그하세요</div>
+				</div>
+			</div>
+			<p>파일 없으면 아래의 [다음] 버튼을 누르세요</p>
 
-    <ion-slide>
-      <img src="assets/img/ica-slidebox-img-2.png" class="slide-image" />
-      <h2 class="slide-title">What is Ionic?</h2>
-      <p>
-        <b>Ionic Framework</b> is an open source SDK that enables developers to build high quality mobile apps with web technologies
-        like HTML, CSS, and JavaScript.</p>
-    </ion-slide>
+			<ion-grid>
+				<ion-row>
+					<ion-col class="prev" >
+						<ion-button (click)="prev()" color="medium">이전</ion-button>
+					</ion-col>
+					<ion-col class="next">
+						<ion-button (click)="next()">다음</ion-button>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ion-slide>
 
-    <ion-slide>
-      <img src="assets/img/ica-slidebox-img-3.png" class="slide-image" />
-      <h2 class="slide-title">What is Ionic Appflow?</h2>
-      <p>
-        <b>Ionic Appflow</b> is a powerful set of services and features built on top of Ionic Framework that brings a totally new
-        level of app development agility to mobile dev teams.</p>
-    </ion-slide>
+		<ion-slide>
+			<h2 class="slide-title">위탁계좌 파일처리</h2>
+			<p>
+				오늘 다운로드 받은 <br/>
+				'FC유치 계좌 리스트-위탁계좌_20YYMMDD_12345.xls’ <br/>
+				파일을 아래에 드래그해 놓으세요 
+			</p>
 
-    <ion-slide>
-      <img src="assets/img/ica-slidebox-img-4.png" class="slide-image" />
-      <h2 class="slide-title">Ready to Play?</h2>
-      <ion-button fill="clear" (click)="startApp()">
-        Continue
-        <ion-icon slot="end" name="arrow-forward"></ion-icon>
-      </ion-button>
-    </ion-slide>
-  </ion-slides>
+			<div class="file_upload">
+				<div ng2FileDrop [ngClass]="{'drop-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event, '위탁계좌')" [uploader]="fileUploader"
+					class="area">
+					<div id="dropZone">이곳으로 업로드할 파일을 드래그하세요</div>
+				</div>
+			</div>
+			<p>파일 없으면 아래의 [다음] 버튼을 누르세요</p>
+
+				<ion-grid>
+					<ion-row>
+						<ion-col class="prev" >
+							<ion-button (click)="prev()" color="medium">이전</ion-button>
+						</ion-col>
+						<ion-col class="next">
+							<ion-button (click)="next()">다음</ion-button>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+		</ion-slide>
+
+		<ion-slide>
+			<h2 class="slide-title">채권, ELS 파일처리</h2>
+			<p>
+				오늘 다운로드 받은 <br/>
+				'FC유치 계좌리스트(채권_ELS)_20YYMMDD_12345.xls’ <br/>
+				파일을 아래에 드래그해 놓으세요 
+			</p>
+
+			<div class="file_upload">
+				<div ng2FileDrop [ngClass]="{'drop-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event, '채권')" [uploader]="fileUploader"
+					class="area">
+					<div id="dropZone">이곳으로 업로드할 파일을 드래그하세요</div>
+				</div>
+			</div>
+			<p>파일 없으면 아래의 [다음] 버튼을 누르세요</p>
+
+				<ion-grid>
+					<ion-row>
+						<ion-col class="prev" >
+							<ion-button (click)="prev()" color="medium">이전</ion-button>
+						</ion-col>
+						<ion-col class="next">
+							<ion-button (click)="next()">다음</ion-button>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+		</ion-slide>
+
+		<ion-slide>
+			<h2 class="slide-title">랩계좌 파일처리</h2>
+			<p>
+				오늘 다운로드 받은 <br/>
+				'FC유치 계좌 리스트-랩계좌_20YYMMDD_12345.xls’ <br/>
+				파일을 아래에 드래그해 놓으세요 
+			</p>
+
+			<div class="file_upload">
+				<div ng2FileDrop [ngClass]="{'drop-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event, '랩계좌')" [uploader]="fileUploader"
+					class="area">
+					<div id="dropZone">이곳으로 업로드할 파일을 드래그하세요</div>
+				</div>
+			</div>
+			<p>파일 없으면 아래의 [다음] 버튼을 누르세요</p>
+
+				<ion-grid>
+					<ion-row>
+						<ion-col class="prev" >
+							<ion-button (click)="prev()" color="medium">이전</ion-button>
+						</ion-col>
+						<ion-col class="next">
+							<ion-button (click)="next()">다음</ion-button>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+		</ion-slide>
+
+		<ion-slide>
+			<h2 class="slide-title">고객리스트 파일처리</h2>
+			<p>
+				마지막으로,<br/>
+				오늘 다운로드 받은 고객리스트 파일<br/>
+				'고객리스트_20YYMMDD_12345.xls’ <br/>
+				파일을 아래에 드래그해 놓으세요.<br/>
+				<br/>
+				* 고객리스트 파일은 고객님들의 생년월 정보를 자동으로 등록해 줍니다.
+			</p>
+
+			<div class="file_upload">
+				<div ng2FileDrop [ngClass]="{'drop-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event, '고객')" [uploader]="fileUploader"
+					class="area">
+					<div id="dropZone">이곳으로 업로드할 파일을 드래그하세요</div>
+				</div>
+			</div>
+			<p>파일 없으면 아래의 [다음] 버튼을 누르세요</p>
+
+				<ion-grid>
+					<ion-row>
+						<ion-col class="prev" >
+							<ion-button (click)="prev()" color="medium">이전</ion-button>
+						</ion-col>
+						<ion-col class="next">
+							<ion-button (click)="next()">다음</ion-button>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+		</ion-slide>
+
+		<ion-slide>
+			<h2 class="slide-title">처리완료</h2>
+			<p>
+				모든 파일 처리가 완료되었습니다.<br/>
+				이젠, '홈' 화면에서 이전 날짜의 파일도 자유롭게 업로드하시기 바랍니다.
+			</p>
+			<ion-button fill="clear" (click)="startApp()">
+				'홈' 화면으로 이동
+				<ion-icon slot="end" name="arrow-forward"></ion-icon>
+			</ion-button>
+
+		</ion-slide>
+
+	</ion-slides>
 </ion-content>

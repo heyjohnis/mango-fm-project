@@ -18,15 +18,18 @@
 	  <ion-item><ion-label>회원번호</ion-label>{{user_id}}</ion-item>
 	  <ion-item><ion-label>이메일</ion-label>{{email}}</ion-item>
 	  <ion-item><ion-label>생년월</ion-label>{{birthYYYY}} / {{birthMM}}</ion-item>
+	  <ion-item><ion-label>회사명</ion-label>{{company_cds[company_cd]}}</ion-item>
+	  <ion-item><ion-label>지점</ion-label>{{branch_nm}}</ion-item>
+	  <ion-item><ion-label>권유자코드</ion-label>{{fa_code}}</ion-item>
 	</ion-list>
 	<ion-grid>
 	  <ion-row>
 		<ion-col size="12" (click)="changePassword()">
 		  <ion-button expand="block"  color="secondary">패스워드 변경</ion-button>
 		</ion-col>
-		<ion-col size="12" (click)="logout()">
+		<!-- <ion-col size="12" (click)="logout()">
 			<ion-button expand="block" color="medium">로그아웃</ion-button>
-		</ion-col>
+		</ion-col> -->
 	  </ion-row>
 	</ion-grid>
 
