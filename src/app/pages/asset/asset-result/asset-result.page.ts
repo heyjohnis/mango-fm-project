@@ -263,11 +263,18 @@ export class AssetResultPage implements OnInit {
 	}
 
 	openRetiredSimulation(){
-		const el = document.querySelector<HTMLInputElement>("#retired_simulation");	
-		let has_class = el.classList.contains('close');
-		if(has_class) 
-			el.classList.remove('close');
-		else 
-			el.classList.add('close');
+		const sim_div = document.querySelector<HTMLInputElement>("#retired_simulation");	
+		let has_class = sim_div.classList.contains('close');
+
+		const btn_arr = document.querySelector<HTMLInputElement>("#btn_retired_sim");
+		if(has_class) { 
+			sim_div.classList.remove('close');
+			btn_arr.classList.remove('close');
+		}
+		else {
+			sim_div.classList.add('close');
+			btn_arr.classList.add('close');
+		}
 	}
+
 }

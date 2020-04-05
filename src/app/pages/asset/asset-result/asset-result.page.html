@@ -26,7 +26,12 @@
 	<div #pieChart style="height:280px;" class="pie_chart"><ion-spinner name="lines"></ion-spinner></div>
 
 	<section class="retired_simulation">
-		<ion-button class="btn_retired" expand="block" sharp="round" color="secondary" (click)="openRetiredSimulation()">은퇴 시뮬레이션 실행하기 <span color="danger">클릭</span></ion-button>
+		<ion-button class="btn_retired" expand="block" sharp="round" color="secondary" (click)="openRetiredSimulation()">은퇴 시뮬레이션 실행하기 
+			<span id="btn_retired_sim" class="close">
+				<ion-icon class="down_arr" name="arrow-dropdown"></ion-icon>
+				<ion-icon class="up_arr" name="arrow-dropup"></ion-icon>
+			</span>
+		</ion-button>
 		<ion-grid class="close" id="retired_simulation">
 			<ion-row class="ages_range">
 				<ion-col size="2" class="current_age">

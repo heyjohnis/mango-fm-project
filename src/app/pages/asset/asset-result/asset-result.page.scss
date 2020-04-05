@@ -24,7 +24,7 @@
 .retired_simulation{padding:0.5em;}
 .retired_simulation ion-grid{padding:1em; background:var(--ion-color-light);}
 .retired_simulation ion-grid.close{height:0; overflow: hidden; padding:0; transition: height 0.2s ease-in-out;}
-.btn_retired span{margin-left:0.5em; color: var(--ion-color-danger);}
+.btn_retired span{margin-left:0.5em;}
 .notice{font-size: 0.8em; text-align: center; color:var(--ion-color-medium);}
 .comment{margin-top:0; padding-left:1em; font-size: 0.9em; text-align: left; color:var(--ion-color-medium);}
 
@@ -52,3 +52,9 @@
 .input_rate ion-input{text-align: right;}
 .input_rate ion-label{width:150px;}
 .input_rate ion-input{background: var(--ion-color-light);}
+
+#btn_retired_sim ion-icon{font-size:1.7em; }
+#btn_retired_sim .down_arr{display:none;}
+#btn_retired_sim .up_arr{display:block;}
+#btn_retired_sim.close .down_arr{display:block;}
+#btn_retired_sim.close .up_arr{display:none;}
